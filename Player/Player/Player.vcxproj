@@ -151,12 +151,15 @@
     <Image Include="..\Resources\middlepanel.png" />
     <Image Include="..\Resources\nextsong.png" />
     <Image Include="..\Resources\nextsongenter.png" />
+    <Image Include="..\Resources\panelBut.png" />
     <Image Include="..\Resources\pause.png" />
     <Image Include="..\Resources\pauseenter.png" />
     <Image Include="..\Resources\play.png" />
+    <Image Include="..\Resources\play1.png" />
     <Image Include="..\Resources\playenter.png" />
     <Image Include="..\Resources\prevsong.png" />
     <Image Include="..\Resources\prevsongenter.png" />
+    <Image Include="..\Resources\settings.png" />
     <Image Include="prevsongenter2.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

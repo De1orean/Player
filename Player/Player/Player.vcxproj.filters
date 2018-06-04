@@ -66,5 +66,14 @@
     <Image Include="prevsongenter2.bmp">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="..\Resources\panelBut.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\settings.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\play1.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
 </Project>
