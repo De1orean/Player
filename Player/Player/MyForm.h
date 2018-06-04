@@ -15,7 +15,14 @@ namespace Player {
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
 	public:
+		System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 		bool check = true;
+
+	public:
+
+	public:
+
+	public:
 		bool playCheck = false;
 		MyForm(void)
 		{
@@ -81,6 +88,8 @@ namespace Player {
 			// 
 			// pictureBox2
 			// 
+			this->pictureBox2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->pictureBox2->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.BackgroundImage")));
 			this->pictureBox2->Cursor = System::Windows::Forms::Cursors::Arrow;
 			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
@@ -92,6 +101,7 @@ namespace Player {
 			// 
 			// playBut
 			// 
+			this->playBut->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
 			this->playBut->BackColor = System::Drawing::Color::Transparent;
 			this->playBut->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"playBut.BackgroundImage")));
 			this->playBut->Cursor = System::Windows::Forms::Cursors::Arrow;
@@ -107,6 +117,7 @@ namespace Player {
 			// 
 			// nextSongBut
 			// 
+			this->nextSongBut->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
 			this->nextSongBut->BackColor = System::Drawing::Color::Transparent;
 			this->nextSongBut->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"nextSongBut.BackgroundImage")));
 			this->nextSongBut->Cursor = System::Windows::Forms::Cursors::Arrow;
@@ -121,6 +132,7 @@ namespace Player {
 			// 
 			// pervSongBut
 			// 
+			this->pervSongBut->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
 			this->pervSongBut->BackColor = System::Drawing::Color::Transparent;
 			this->pervSongBut->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pervSongBut.BackgroundImage")));
 			this->pervSongBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pervSongBut.Image")));
@@ -167,21 +179,21 @@ private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e
 
 private: System::Void pervSongBut_MouseEnter_1(System::Object^  sender, System::EventArgs^  e)
 {
-	pervSongBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\prevsongenter.png");
+
+	pervSongBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"prevsongenter")));
 }
 private: System::Void pervSongBut_MouseLeave(System::Object^  sender, System::EventArgs^  e)
 {
-	pervSongBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\prevsong.png");
+	pervSongBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"prevsong")));
 }
 private: System::Void nextSongBut_MouseEnter(System::Object^  sender, System::EventArgs^  e)
 {
-	nextSongBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\nextsongenter.png");
-
+	nextSongBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"nextsongenter")));
 }
 
 private: System::Void nextSongBut_MouseLeave(System::Object^  sender, System::EventArgs^  e)
 {
-	nextSongBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\nextsong.png");
+	nextSongBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"nextsong")));
 
 }
 		 
@@ -191,18 +203,18 @@ private: System::Void playBut_Click(System::Object^  sender, System::EventArgs^ 
 {
 	if (check == true)
 	{
-		if(playCheck == true)
-			playBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\pauseenter.png");
+		if (playCheck == true)
+			playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pauseenter")));
 		else
-			playBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\pause.png");
+			playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pause")));
 		check = false;
 	}
 	else
 	{
 		if(playCheck==true)
-			playBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\playenter.png");
+			playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"playenter")));
 		else
-			playBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\play.png");
+			playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"play")));
 		check = true;
 	}
 }
@@ -210,20 +222,21 @@ private: System::Void playBut_MouseEnter(System::Object^  sender, System::EventA
 	playCheck = true;
 	if (check == true)
 	{
-		playBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\playenter.png");
+		playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"playenter")));
 	}
 	else
-		playBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\pauseenter.png");
+		playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pauseenter")));
 }
 private: System::Void playBut_MouseLeave(System::Object^  sender, System::EventArgs^  e) {
 	playCheck = false;
 	if (check == true)
 	{
-		playBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\play.png");
+		playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"play")));
 	}
 	else
-		playBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\pause.png");
+		playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pause")));
 }
+
 
 };
 }

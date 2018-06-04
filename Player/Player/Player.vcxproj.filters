@@ -33,5 +33,38 @@
     <Image Include="..\Resources\bottompanel.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="..\Resources\leftpanel.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\middlepanel.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\nextsong.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\nextsongenter.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\pause.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\pauseenter.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\play.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\playenter.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\prevsong.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\prevsongenter.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="prevsongenter2.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
 </Project>

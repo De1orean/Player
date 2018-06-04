@@ -18,5 +18,6 @@ Class Player.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
+    System.ComponentModel.ComponentResourceManager resources : Public
     Boolean check : Public
     Boolean playCheck : Public
