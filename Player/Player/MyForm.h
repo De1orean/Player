@@ -15,6 +15,8 @@ namespace Player {
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
 	public:
+		bool check = true;
+		bool playCheck = false;
 		MyForm(void)
 		{
 			InitializeComponent();
@@ -34,14 +36,24 @@ namespace Player {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Label^  songName;
+
 	protected:
-	private: System::Windows::Forms::TrackBar^  volumeBar;
-	private: System::Windows::Forms::TrackBar^  trackBar;
-	private: System::Windows::Forms::Button^  pausePlay;
-	private: System::Windows::Forms::Button^  prevSong;
-	private: System::Windows::Forms::Button^  nextSong;
-	private: System::Windows::Forms::PictureBox^  pictureBox1;
+
+
+
+
+
+
+	private: System::Windows::Forms::PictureBox^  pictureBox2;
+	private: System::Windows::Forms::PictureBox^  playBut;
+
+	private: System::Windows::Forms::PictureBox^  nextSongBut;
+	private: System::Windows::Forms::PictureBox^  pervSongBut;
+
+
+
+
+
 
 	private:
 		/// <summary>
@@ -56,110 +68,162 @@ namespace Player {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->songName = (gcnew System::Windows::Forms::Label());
-			this->volumeBar = (gcnew System::Windows::Forms::TrackBar());
-			this->trackBar = (gcnew System::Windows::Forms::TrackBar());
-			this->pausePlay = (gcnew System::Windows::Forms::Button());
-			this->prevSong = (gcnew System::Windows::Forms::Button());
-			this->nextSong = (gcnew System::Windows::Forms::Button());
-			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->volumeBar))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
+			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
+			this->playBut = (gcnew System::Windows::Forms::PictureBox());
+			this->nextSongBut = (gcnew System::Windows::Forms::PictureBox());
+			this->pervSongBut = (gcnew System::Windows::Forms::PictureBox());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->playBut))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nextSongBut))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pervSongBut))->BeginInit();
 			this->SuspendLayout();
 			// 
-			// songName
+			// pictureBox2
 			// 
-			this->songName->Font = (gcnew System::Drawing::Font(L"Times New Roman", 48, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->songName->Location = System::Drawing::Point(12, 85);
-			this->songName->Name = L"songName";
-			this->songName->Size = System::Drawing::Size(359, 77);
-			this->songName->TabIndex = 0;
-			this->songName->Text = L"Song name";
+			this->pictureBox2->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.BackgroundImage")));
+			this->pictureBox2->Cursor = System::Windows::Forms::Cursors::Arrow;
+			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
+			this->pictureBox2->Location = System::Drawing::Point(-8, 288);
+			this->pictureBox2->Name = L"pictureBox2";
+			this->pictureBox2->Size = System::Drawing::Size(708, 98);
+			this->pictureBox2->TabIndex = 7;
+			this->pictureBox2->TabStop = false;
 			// 
-			// volumeBar
+			// playBut
 			// 
-			this->volumeBar->Location = System::Drawing::Point(12, 239);
-			this->volumeBar->Name = L"volumeBar";
-			this->volumeBar->Size = System::Drawing::Size(104, 45);
-			this->volumeBar->TabIndex = 1;
+			this->playBut->BackColor = System::Drawing::Color::Transparent;
+			this->playBut->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"playBut.BackgroundImage")));
+			this->playBut->Cursor = System::Windows::Forms::Cursors::Arrow;
+			this->playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"playBut.Image")));
+			this->playBut->Location = System::Drawing::Point(311, 303);
+			this->playBut->Name = L"playBut";
+			this->playBut->Size = System::Drawing::Size(70, 70);
+			this->playBut->TabIndex = 8;
+			this->playBut->TabStop = false;
+			this->playBut->Click += gcnew System::EventHandler(this, &MyForm::playBut_Click);
+			this->playBut->MouseEnter += gcnew System::EventHandler(this, &MyForm::playBut_MouseEnter);
+			this->playBut->MouseLeave += gcnew System::EventHandler(this, &MyForm::playBut_MouseLeave);
 			// 
-			// trackBar
+			// nextSongBut
 			// 
-			this->trackBar->Location = System::Drawing::Point(12, 170);
-			this->trackBar->Name = L"trackBar";
-			this->trackBar->Size = System::Drawing::Size(359, 45);
-			this->trackBar->TabIndex = 2;
+			this->nextSongBut->BackColor = System::Drawing::Color::Transparent;
+			this->nextSongBut->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"nextSongBut.BackgroundImage")));
+			this->nextSongBut->Cursor = System::Windows::Forms::Cursors::Arrow;
+			this->nextSongBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"nextSongBut.Image")));
+			this->nextSongBut->Location = System::Drawing::Point(387, 314);
+			this->nextSongBut->Name = L"nextSongBut";
+			this->nextSongBut->Size = System::Drawing::Size(50, 50);
+			this->nextSongBut->TabIndex = 9;
+			this->nextSongBut->TabStop = false;
+			this->nextSongBut->MouseEnter += gcnew System::EventHandler(this, &MyForm::nextSongBut_MouseEnter);
+			this->nextSongBut->MouseLeave += gcnew System::EventHandler(this, &MyForm::nextSongBut_MouseLeave);
 			// 
-			// pausePlay
+			// pervSongBut
 			// 
-			this->pausePlay->Location = System::Drawing::Point(301, 214);
-			this->pausePlay->Name = L"pausePlay";
-			this->pausePlay->Size = System::Drawing::Size(70, 70);
-			this->pausePlay->TabIndex = 3;
-			this->pausePlay->Text = L"Play\r\npause\r\n";
-			this->pausePlay->UseVisualStyleBackColor = true;
-			this->pausePlay->Click += gcnew System::EventHandler(this, &MyForm::pausePlay_Click);
-			// 
-			// prevSong
-			// 
-			this->prevSong->Location = System::Drawing::Point(245, 224);
-			this->prevSong->Name = L"prevSong";
-			this->prevSong->Size = System::Drawing::Size(50, 50);
-			this->prevSong->TabIndex = 4;
-			this->prevSong->Text = L"prev";
-			this->prevSong->UseVisualStyleBackColor = true;
-			this->prevSong->Click += gcnew System::EventHandler(this, &MyForm::prevSong_Click);
-			// 
-			// nextSong
-			// 
-			this->nextSong->Location = System::Drawing::Point(377, 224);
-			this->nextSong->Name = L"nextSong";
-			this->nextSong->Size = System::Drawing::Size(50, 50);
-			this->nextSong->TabIndex = 5;
-			this->nextSong->Text = L"next";
-			this->nextSong->UseVisualStyleBackColor = true;
-			this->nextSong->Click += gcnew System::EventHandler(this, &MyForm::nextSong_Click);
-			// 
-			// pictureBox1
-			// 
-			this->pictureBox1->Location = System::Drawing::Point(480, 15);
-			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(200, 200);
-			this->pictureBox1->TabIndex = 6;
-			this->pictureBox1->TabStop = false;
+			this->pervSongBut->BackColor = System::Drawing::Color::Transparent;
+			this->pervSongBut->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pervSongBut.BackgroundImage")));
+			this->pervSongBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pervSongBut.Image")));
+			this->pervSongBut->Location = System::Drawing::Point(255, 314);
+			this->pervSongBut->Name = L"pervSongBut";
+			this->pervSongBut->Size = System::Drawing::Size(50, 50);
+			this->pervSongBut->TabIndex = 10;
+			this->pervSongBut->TabStop = false;
+			this->pervSongBut->MouseEnter += gcnew System::EventHandler(this, &MyForm::pervSongBut_MouseEnter_1);
+			this->pervSongBut->MouseLeave += gcnew System::EventHandler(this, &MyForm::pervSongBut_MouseLeave);
 			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(692, 296);
-			this->Controls->Add(this->pictureBox1);
-			this->Controls->Add(this->nextSong);
-			this->Controls->Add(this->prevSong);
-			this->Controls->Add(this->pausePlay);
-			this->Controls->Add(this->trackBar);
-			this->Controls->Add(this->volumeBar);
-			this->Controls->Add(this->songName);
+			this->BackColor = System::Drawing::SystemColors::ButtonHighlight;
+			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
+			this->ClientSize = System::Drawing::Size(692, 398);
+			this->Controls->Add(this->pervSongBut);
+			this->Controls->Add(this->nextSongBut);
+			this->Controls->Add(this->playBut);
+			this->Controls->Add(this->pictureBox2);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->volumeBar))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->playBut))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nextSongBut))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pervSongBut))->EndInit();
 			this->ResumeLayout(false);
-			this->PerformLayout();
 
 		}
 #pragma endregion
-private: System::Void pausePlay_Click(System::Object^  sender, System::EventArgs^  e) {
-	
+
+
+//Загрузка формы
+private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e)
+{
+	//volumeBar->BackColor = 
 }
-private: System::Void nextSong_Click(System::Object^  sender, System::EventArgs^  e) {
+
+		 //Изменение пикчербоксов при входе мыши
+
+
+private: System::Void pervSongBut_MouseEnter_1(System::Object^  sender, System::EventArgs^  e)
+{
+	pervSongBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\prevsongenter.png");
+}
+private: System::Void pervSongBut_MouseLeave(System::Object^  sender, System::EventArgs^  e)
+{
+	pervSongBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\prevsong.png");
+}
+private: System::Void nextSongBut_MouseEnter(System::Object^  sender, System::EventArgs^  e)
+{
+	nextSongBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\nextsongenter.png");
 
 }
-private: System::Void prevSong_Click(System::Object^  sender, System::EventArgs^  e) {
+
+private: System::Void nextSongBut_MouseLeave(System::Object^  sender, System::EventArgs^  e)
+{
+	nextSongBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\nextsong.png");
 
 }
+		 
+//Изменение плей при нажатии
+
+private: System::Void playBut_Click(System::Object^  sender, System::EventArgs^  e) 
+{
+	if (check == true)
+	{
+		if(playCheck == true)
+			playBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\pauseenter.png");
+		else
+			playBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\pause.png");
+		check = false;
+	}
+	else
+	{
+		if(playCheck==true)
+			playBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\playenter.png");
+		else
+			playBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\play.png");
+		check = true;
+	}
+}
+private: System::Void playBut_MouseEnter(System::Object^  sender, System::EventArgs^  e) {
+	playCheck = true;
+	if (check == true)
+	{
+		playBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\playenter.png");
+	}
+	else
+		playBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\pauseenter.png");
+}
+private: System::Void playBut_MouseLeave(System::Object^  sender, System::EventArgs^  e) {
+	playCheck = false;
+	if (check == true)
+	{
+		playBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\play.png");
+	}
+	else
+		playBut->Image = System::Drawing::Image::FromFile("C:\\Users\\kot79\\Documents\\GitHub\\Player\\Player\\Resources\\pause.png");
+}
+
 };
 }
