@@ -30,49 +30,58 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Resources\bottompanel.png">
+    <Image Include="..\Resources\settingsenterbig.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\Resources\leftpanel.png">
+    <Image Include="bottompanel.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\Resources\middlepanel.png">
+    <Image Include="leftpanel.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\Resources\nextsong.png">
+    <Image Include="middlepanel.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\Resources\nextsongenter.png">
+    <Image Include="nextsong.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\Resources\pause.png">
+    <Image Include="nextsongenter.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\Resources\pauseenter.png">
+    <Image Include="panelBut.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\Resources\play.png">
+    <Image Include="panelButenter.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\Resources\playenter.png">
+    <Image Include="pause.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\Resources\prevsong.png">
+    <Image Include="pauseenter.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\Resources\prevsongenter.png">
+    <Image Include="play.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="play1.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="playenter.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="prevsong.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="prevsongenter.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
     <Image Include="prevsongenter2.bmp">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\Resources\panelBut.png">
+    <Image Include="settings.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\Resources\settings.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="..\Resources\play1.png">
+    <Image Include="settingsenter.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
   </ItemGroup>

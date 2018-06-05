@@ -16,11 +16,9 @@ namespace Player {
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
 	public:
-
 		System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 		bool check = true;
 		bool playCheck = false;
-	
 		MyForm(void)
 		{
 			InitializeComponent();
@@ -40,16 +38,18 @@ namespace Player {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Panel^  leftPanel;
+	
 	protected:
-
+	private: System::Windows::Forms::Panel^  leftPanel;
+	private: System::Windows::Forms::Label^  SettingsLagel;
 	private: System::Windows::Forms::PictureBox^  panelBut;
 	private: System::Windows::Forms::PictureBox^  pictureBox2;
 	private: System::Windows::Forms::PictureBox^  playBut;
 
 	private: System::Windows::Forms::PictureBox^  nextSongBut;
 	private: System::Windows::Forms::PictureBox^  pervSongBut;
-	private: System::Windows::Forms::PictureBox^  pictureBox1;
+	private: System::Windows::Forms::PictureBox^  settingsBut;
+
 	private: System::Windows::Forms::Panel^  panel2;
 
 	private:
@@ -71,7 +71,8 @@ namespace Player {
 			this->nextSongBut = (gcnew System::Windows::Forms::PictureBox());
 			this->pervSongBut = (gcnew System::Windows::Forms::PictureBox());
 			this->leftPanel = (gcnew System::Windows::Forms::Panel());
-			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->SettingsLagel = (gcnew System::Windows::Forms::Label());
+			this->settingsBut = (gcnew System::Windows::Forms::PictureBox());
 			this->panelBut = (gcnew System::Windows::Forms::PictureBox());
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -79,7 +80,7 @@ namespace Player {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nextSongBut))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pervSongBut))->BeginInit();
 			this->leftPanel->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->settingsBut))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->panelBut))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -89,9 +90,9 @@ namespace Player {
 			this->pictureBox2->Cursor = System::Windows::Forms::Cursors::Arrow;
 			this->pictureBox2->Dock = System::Windows::Forms::DockStyle::Bottom;
 			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
-			this->pictureBox2->Location = System::Drawing::Point(0, 300);
+			this->pictureBox2->Location = System::Drawing::Point(0, 308);
 			this->pictureBox2->Name = L"pictureBox2";
-			this->pictureBox2->Size = System::Drawing::Size(692, 98);
+			this->pictureBox2->Size = System::Drawing::Size(692, 90);
 			this->pictureBox2->TabIndex = 7;
 			this->pictureBox2->TabStop = false;
 			// 
@@ -102,7 +103,7 @@ namespace Player {
 			this->playBut->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"playBut.BackgroundImage")));
 			this->playBut->Cursor = System::Windows::Forms::Cursors::Arrow;
 			this->playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"playBut.Image")));
-			this->playBut->Location = System::Drawing::Point(311, 309);
+			this->playBut->Location = System::Drawing::Point(311, 308);
 			this->playBut->Name = L"playBut";
 			this->playBut->Size = System::Drawing::Size(70, 70);
 			this->playBut->TabIndex = 8;
@@ -146,7 +147,8 @@ namespace Player {
 				| System::Windows::Forms::AnchorStyles::Left));
 			this->leftPanel->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(225)), static_cast<System::Int32>(static_cast<System::Byte>(226)),
 				static_cast<System::Int32>(static_cast<System::Byte>(225)));
-			this->leftPanel->Controls->Add(this->pictureBox1);
+			this->leftPanel->Controls->Add(this->SettingsLagel);
+			this->leftPanel->Controls->Add(this->settingsBut);
 			this->leftPanel->Controls->Add(this->panelBut);
 			this->leftPanel->ForeColor = System::Drawing::Color::Transparent;
 			this->leftPanel->Location = System::Drawing::Point(0, 0);
@@ -154,14 +156,33 @@ namespace Player {
 			this->leftPanel->Size = System::Drawing::Size(46, 302);
 			this->leftPanel->TabIndex = 11;
 			// 
-			// pictureBox1
+			// SettingsLagel
 			// 
-			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(0, 50);
-			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(44, 44);
-			this->pictureBox1->TabIndex = 12;
-			this->pictureBox1->TabStop = false;
+			this->SettingsLagel->AutoSize = true;
+			this->SettingsLagel->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(225)), static_cast<System::Int32>(static_cast<System::Byte>(226)),
+				static_cast<System::Int32>(static_cast<System::Byte>(225)));
+			this->SettingsLagel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Underline, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->SettingsLagel->ForeColor = System::Drawing::SystemColors::Desktop;
+			this->SettingsLagel->Location = System::Drawing::Point(50, 65);
+			this->SettingsLagel->Name = L"SettingsLagel";
+			this->SettingsLagel->Size = System::Drawing::Size(100, 29);
+			this->SettingsLagel->TabIndex = 13;
+			this->SettingsLagel->Text = L"Settings";
+			this->SettingsLagel->MouseEnter += gcnew System::EventHandler(this, &MyForm::SettingsLagel_MouseEnter);
+			this->SettingsLagel->MouseLeave += gcnew System::EventHandler(this, &MyForm::SettingsLagel_MouseLeave);
+			// 
+			// settingsBut
+			// 
+			this->settingsBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"settingsBut.Image")));
+			this->settingsBut->Location = System::Drawing::Point(0, 50);
+			this->settingsBut->Name = L"settingsBut";
+			this->settingsBut->Size = System::Drawing::Size(44, 44);
+			this->settingsBut->TabIndex = 12;
+			this->settingsBut->TabStop = false;
+			this->settingsBut->Click += gcnew System::EventHandler(this, &MyForm::settingsBut_Click);
+			this->settingsBut->MouseEnter += gcnew System::EventHandler(this, &MyForm::settingsBut_MouseEnter);
+			this->settingsBut->MouseLeave += gcnew System::EventHandler(this, &MyForm::settingsBut_MouseLeave);
 			// 
 			// panelBut
 			// 
@@ -172,12 +193,18 @@ namespace Player {
 			this->panelBut->TabIndex = 0;
 			this->panelBut->TabStop = false;
 			this->panelBut->Click += gcnew System::EventHandler(this, &MyForm::panelBut_Click);
+			this->panelBut->MouseEnter += gcnew System::EventHandler(this, &MyForm::panelBut_MouseEnter);
+			this->panelBut->MouseLeave += gcnew System::EventHandler(this, &MyForm::panelBut_MouseLeave);
 			// 
 			// panel2
 			// 
-			this->panel2->Location = System::Drawing::Point(45, 0);
+			this->panel2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->panel2->BackColor = System::Drawing::Color::White;
+			this->panel2->Location = System::Drawing::Point(44, 0);
 			this->panel2->Name = L"panel2";
-			this->panel2->Size = System::Drawing::Size(647, 302);
+			this->panel2->Size = System::Drawing::Size(648, 302);
 			this->panel2->TabIndex = 12;
 			// 
 			// MyForm
@@ -202,7 +229,8 @@ namespace Player {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nextSongBut))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pervSongBut))->EndInit();
 			this->leftPanel->ResumeLayout(false);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
+			this->leftPanel->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->settingsBut))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->panelBut))->EndInit();
 			this->ResumeLayout(false);
 
@@ -238,6 +266,34 @@ private: System::Void nextSongBut_MouseLeave(System::Object^  sender, System::Ev
 	nextSongBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"nextsong")));
 
 }
+private: System::Void panelBut_MouseEnter(System::Object^  sender, System::EventArgs^  e)
+{
+		panelBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panelButenter")));
+}
+private: System::Void panelBut_MouseLeave(System::Object^  sender, System::EventArgs^  e)
+{
+	panelBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panelBut")));
+}
+
+private: System::Void settingsBut_MouseEnter(System::Object^  sender, System::EventArgs^  e)
+{
+	if (settingsBut->Width < 150)
+	{
+		settingsBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"settingsenter")));
+
+	}
+	else
+	{
+		settingsBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"settingsenterbig")));
+		SettingsLagel->BackColor = System::Drawing::Color::FromArgb(255, 206, 206, 206);
+	}
+}
+private: System::Void settingsBut_MouseLeave(System::Object^  sender, System::EventArgs^  e)
+{
+	settingsBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"settings")));
+	SettingsLagel->BackColor = System::Drawing::Color::FromArgb(255, 225, 226, 225);
+}
+
 		 
 //Изменение плей при нажатии
 
@@ -260,6 +316,7 @@ private: System::Void playBut_Click(System::Object^  sender, System::EventArgs^ 
 		check = true;
 	}
 }
+		 //изменение плей при наведении
 private: System::Void playBut_MouseEnter(System::Object^  sender, System::EventArgs^  e) {
 	playCheck = true;
 	if (check == true)
@@ -279,14 +336,42 @@ private: System::Void playBut_MouseLeave(System::Object^  sender, System::EventA
 		playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pause")));
 }
 
+		 //выезжание панели
+
 private: System::Void panelBut_Click(System::Object^  sender, System::EventArgs^  e) 
 {
 	if (leftPanel->Width != 186)
+	{
 		for (int i = 46; i < 186; i++)
+		{
 			leftPanel->Width += 1;
+			settingsBut->Width += 1;
+		}
+		
+	}
 	else
+	{
 		for (int i = 46; i < 186; i++)
-			leftPanel -> Width -= 1;
+		{
+			leftPanel->Width -= 1;
+			settingsBut->Width -= 1;
+		}
+	}
+}
+
+
+
+private: System::Void SettingsLagel_MouseEnter(System::Object^  sender, System::EventArgs^  e)
+{
+	settingsBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"settingsenterbig")));
+	SettingsLagel->BackColor = System::Drawing::Color::FromArgb( 255, 206, 206, 206);
+}
+private: System::Void SettingsLagel_MouseLeave(System::Object^  sender, System::EventArgs^  e)
+{
+	settingsBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"settings")));
+	SettingsLagel->BackColor = System::Drawing::Color::FromArgb(255, 225, 226, 225);
+}
+private: System::Void settingsBut_Click(System::Object^  sender, System::EventArgs^  e) {
 }
 };
 }
