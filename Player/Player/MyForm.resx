@@ -447,6 +447,59 @@
         47xzLbYAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="panelBut.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAALoAAAAsCAIAAABdUzX4AAAABGdBTUEAALGeYUxB9wAAACBjSFJNAACH
+        EAAAjBIAAP1NAACBPgAAWesAARIPAAA85gAAGc66ySIyAAABJmlDQ1BBZG9iZSBSR0IgKDE5OTgpAAAo
+        z2NgYDJwdHFyZRJgYMjNKykKcndSiIiMUmA/z8DGwMwABonJxQWOAQE+IHZefl4qAwb4do2BEURf1gWZ
+        xUAa4EouKCoB0n+A2CgltTiZgYHRAMjOLi8pAIozzgGyRZKywewNIHZRSJAzkH0EyOZLh7CvgNhJEPYT
+        ELsI6Akg+wtIfTqYzcQBNgfClgGxS1IrQPYyOOcXVBZlpmeUKBhaWloqOKbkJ6UqBFcWl6TmFit45iXn
+        FxXkFyWWpKYA1ULcBwaCEIWgENMAarTQZKAyAMUDhPU5EBy+jGJnEGIIkFxaVAZlMjIZE+YjzJgjwcDg
+        v5SBgeUPQsykl4FhgQ4DA/9UhJiaIQODgD4Dw745AMDGT/0ZOjZcAAAACXBIWXMAAAsTAAALEwEAmpwY
+        AAABAUlEQVR4Xu3YQWrCUBSGUeehG7BrS6Z2JXZk12JBd2IKFmuJK2kxkNEd+BNaCJzHGd3Jm3xwX7Ia
+        bgM8SC4E5EJALgTkQkAuBORCQC4E5EJALgTkQkAuBORCoM5l/bx+up/d226cHI6HcTLzbF420y0sTp1L
+        0zSr+9m+bsfJ/n0/Tmaetm2nW1gcuRCwjAjUufQf/ak//bp8XcbJ9fs6TmY6f56nW1icOhcoyYWAZUTA
+        U5dAnYsPaUpyIWAZEfDUJVDnAiW5ELCMCHjqEqhz+bsP6a7rpltYnP/OxX+XRbOMCNS5QEkuBORCQC4E
+        5EJALgTkQkAuBORCQC4E5MLDbsMPuZ0b5VgPjGMAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        EwAACxMBAJqcGAAAAc5JREFUSEvF1k0rRFEcx3EvgAUheUixkVLykMiOPKdk4W0oD3mMBcragg0WQxEr
+        e69BFvICkIelncL4/mpODvMfc2buxb8+NfM/9/Sbe869d25BMpn8F2bzL3x+yFzN2MIREnk4xg4aEBxc
+        gSvogKgu0BQavAR/clR7ocEb8Cdm8mL0LCehwavwJ373jmW0YTbV+0nCCh7DJqZQpAaVLfgN3VC1wDrG
+        ZwafewfUqUFlC5YRqHphjfvM4MPU4CNq1KBCgkeh6oM17jODdc/pwz2q1aBCgsehGoY17ss7eAZd6MEA
+        tLwlUBVjEOppXMctwp+fd3Apcilt2Svc/Ehn3A8tq/ZWF1YZVPpRujM0JlqROejKd/Nj3eMJqLTM1rgv
+        1mCdpUorYY37Yg0egkoXlDXuizW4A6pGWOO+4OAVuEmZLKAT014vk6zBVWpQof9Oocx/J+uMdTu4SXHY
+        zRbsntW1uISbGMU12kODVZWYxBq057lahx485fjMM4JvUajGb5QVfKo+7tAKXWA6c0fftfch6mH+eCt4
+        X/2UJ9xAy56rBzxjHmllBTdBr6AuPKptpJUVrNJLt16+9RKuPc/HAc7gXhC+VFrwXzObvy9Z8AHJ21ck
+        nl85rwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing">
+    <value>17, 17</value>
+  </data>
+  <data name="pictureBox4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        EwAACxMBAJqcGAAAAmJJREFUSEvFlU+rUkEYxs+F2rdr0TZo0arPUKs+QfQB3FyoRVC0E/9gKiioGKW2
+        UBT8h2IUoXgRRYprSjtBBJGwJEFMMPGaTe9zaMJO71ELml74+c77jDMPZ87MHE0I8V9gRRWwogpYUQWs
+        qAJWVAErqoAVJYdGJBJ5nM1may6X6xo3DwcrHoLVar0cDAbvw7hYLL4lTYzH46/hcPjR9v/MYMV9kOmF
+        drs9gyGMfT7f7Xq9/oH69EilUi8osWMlrLgLp9N5sdlsjqktsLwwln2xWCy62WzQJaLR6FOpc7CiGW63
+        +3q32/1CbT2ksd1uv0Kl/p9SqRRcr9diuVwKr9d7S+pGWFHi9/uPA4HAPYD32ev1lqT/DGmcy+Wa5XK5
+        R80jkmH+Dv2VSqWPmoMVJYvFgpJ5SGPKDdS01E8oaR6P5ybqfr+/Qs3BipLZbPaNsmlsGddQ12q195Sw
+        +c4NBoOz6XSK8ezcrCj5MdA0jMatVmtKSR/b6XQ+r1Z44N/nBawo+VPjRqPxkZI+FvthPp//3RPLo2EW
+        RmM6v68oabjB8LTD4fAMNQcrSpLJ5EtMCmjn1o3vXBrLm8vhcFyipCUSiQJqOu+fUHOwohmhUOjhaDRa
+        U1sPaYzziiuUJC2TydyZTCa0WBtBx/ABNA5W3AUt4w3sWGqLdDp9AmPZR6tyFzqiUCi8ofTL2G1YcR+4
+        wfBBoMlPYWyz2a7Sa3kuN2O1Wh1aLJbz22OMsOIh4MPwjALGtOT6BYLI5/Ov95kCVpQcEEf4icfjGWyk
+        Xe/UCCuqgBVVwIoqYEUVsKIKWPHfI7TvFJxAp2mdLjUAAAAASUVORK5CYII=
+</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.TrayHeight" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAAAAAAAEAIADgigAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAEAAAABAAgGAAAAXHKoZgAAAAlw
@@ -1046,55 +1099,58 @@
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="bottompanel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>bottompanel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\bottompanel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="leftpanel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>leftpanel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\leftpanel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="middlepanel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>middlepanel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\middlepanel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="nextsong" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>nextsong.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\nextsong.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="nextsongenter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>nextsongenter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\nextsongenter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="openfilebut" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\openfilebut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="panelBut" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>panelBut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\panelBut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="panelButenter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>panelButenter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\panelButenter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pause" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>pause.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\pause.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pauseenter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>pauseenter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\pauseenter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="play" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>play.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\play.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="play1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>play1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\play1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="playenter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>playenter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\playenter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="prevsong" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>prevsong.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\prevsong.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="prevsongenter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>prevsongenter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="prevsongenter2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>prevsongenter2.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\prevsongenter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="settingsenter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>settingsenter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\settingsenter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="settingsenterbig" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\settingsenterbig.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
