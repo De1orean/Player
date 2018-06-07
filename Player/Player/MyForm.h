@@ -1,6 +1,8 @@
 
 #pragma 
-
+#include <string>
+#include <list>
+#include <iterator>
 
 namespace Player {
 
@@ -92,8 +94,8 @@ namespace Player {
 			this->settingsBut = (gcnew System::Windows::Forms::PictureBox());
 			this->panelBut = (gcnew System::Windows::Forms::PictureBox());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
-			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
@@ -193,11 +195,12 @@ namespace Player {
 			this->SettingsLagel->AutoSize = true;
 			this->SettingsLagel->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(225)), static_cast<System::Int32>(static_cast<System::Byte>(226)),
 				static_cast<System::Int32>(static_cast<System::Byte>(225)));
-			this->SettingsLagel->Font = (gcnew System::Drawing::Font(L"Rockwell", 18));
+			this->SettingsLagel->Font = (gcnew System::Drawing::Font(L"Rockwell", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
 			this->SettingsLagel->ForeColor = System::Drawing::SystemColors::Desktop;
-			this->SettingsLagel->Location = System::Drawing::Point(46, 60);
+			this->SettingsLagel->Location = System::Drawing::Point(46, 67);
 			this->SettingsLagel->Name = L"SettingsLagel";
-			this->SettingsLagel->Size = System::Drawing::Size(100, 27);
+			this->SettingsLagel->Size = System::Drawing::Size(86, 23);
 			this->SettingsLagel->TabIndex = 13;
 			this->SettingsLagel->Text = L"Settings";
 			this->SettingsLagel->MouseEnter += gcnew System::EventHandler(this, &MyForm::SettingsLagel_MouseEnter);
@@ -232,26 +235,15 @@ namespace Player {
 			// 
 			this->panel1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(236)), static_cast<System::Int32>(static_cast<System::Byte>(237)),
-				static_cast<System::Int32>(static_cast<System::Byte>(239)));
-			this->panel1->Controls->Add(this->label1);
+			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(225)), static_cast<System::Int32>(static_cast<System::Byte>(226)),
+				static_cast<System::Int32>(static_cast<System::Byte>(225)));
 			this->panel1->Controls->Add(this->pictureBox1);
+			this->panel1->Controls->Add(this->label1);
 			this->panel1->Controls->Add(this->listBox1);
 			this->panel1->Location = System::Drawing::Point(419, 0);
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(273, 309);
 			this->panel1->TabIndex = 12;
-			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Rockwell", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->label1->Location = System::Drawing::Point(3, 9);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(92, 27);
-			this->label1->TabIndex = 2;
-			this->label1->Text = L"Playlist";
 			// 
 			// pictureBox1
 			// 
@@ -266,28 +258,47 @@ namespace Player {
 			this->pictureBox1->MouseEnter += gcnew System::EventHandler(this, &MyForm::pictureBox1_MouseEnter);
 			this->pictureBox1->MouseLeave += gcnew System::EventHandler(this, &MyForm::pictureBox1_MouseLeave);
 			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Rockwell", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label1->Location = System::Drawing::Point(3, 9);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(92, 27);
+			this->label1->TabIndex = 2;
+			this->label1->Text = L"Playlist";
+			// 
 			// listBox1
 			// 
 			this->listBox1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Right));
+			this->listBox1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(236)), static_cast<System::Int32>(static_cast<System::Byte>(237)),
+				static_cast<System::Int32>(static_cast<System::Byte>(239)));
+			this->listBox1->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->listBox1->Font = (gcnew System::Drawing::Font(L"Rockwell", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
 			this->listBox1->FormattingEnabled = true;
+			this->listBox1->ItemHeight = 14;
+			this->listBox1->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"ctr", L"terte", L"ter", L"t" });
 			this->listBox1->Location = System::Drawing::Point(0, 50);
 			this->listBox1->Name = L"listBox1";
-			this->listBox1->Size = System::Drawing::Size(273, 264);
+			this->listBox1->Size = System::Drawing::Size(273, 266);
 			this->listBox1->TabIndex = 0;
 			// 
 			// openFileDialog1
 			// 
 			this->openFileDialog1->FileName = L"openFileDialog1";
-			this->openFileDialog1->Filter = L"*.mp3|*.*";
+			this->openFileDialog1->Filter = L"Music Files (*.mp3)|*.mp3|All files (*.*)|*.*";
 			this->openFileDialog1->ValidateNames = false;
+			this->openFileDialog1->FileOk += gcnew System::ComponentModel::CancelEventHandler(this, &MyForm::openFileDialog1_FileOk);
 			// 
 			// pictureBox3
 			// 
 			this->pictureBox3->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->pictureBox3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(236)), static_cast<System::Int32>(static_cast<System::Byte>(237)),
-				static_cast<System::Int32>(static_cast<System::Byte>(239)));
+			this->pictureBox3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(225)), static_cast<System::Int32>(static_cast<System::Byte>(226)),
+				static_cast<System::Int32>(static_cast<System::Byte>(225)));
 			this->pictureBox3->Location = System::Drawing::Point(-1, 0);
 			this->pictureBox3->Name = L"pictureBox3";
 			this->pictureBox3->Size = System::Drawing::Size(693, 51);
@@ -354,8 +365,8 @@ namespace Player {
 			this->Controls->Add(this->playBut);
 			this->Controls->Add(this->pictureBox2);
 			this->Controls->Add(this->panel1);
-			this->Controls->Add(this->pictureBox3);
 			this->Controls->Add(this->songName);
+			this->Controls->Add(this->pictureBox3);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"MyForm";
 			this->Text = L"Blueberry";
@@ -547,5 +558,10 @@ namespace Player {
 	}
 
 
+	private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e)
+	{
+		listBox1->Items->Add(openFileDialog1->FileName);
+		songName->Text = openFileDialog1->FileName;
+	}
 };
 }

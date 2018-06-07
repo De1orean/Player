@@ -5,6 +5,8 @@ using namespace System::Windows::Forms;
 
 [STAThreadAttribute]
 //function main
+
+
 void main(array<String^>^ args)
 {
 	Application::EnableVisualStyles();
