@@ -3,6 +3,7 @@
 #include <string>
 #include <list>
 #include <iterator>
+#include "resource.h"
 
 namespace Player {
 
@@ -66,7 +67,8 @@ namespace Player {
 	private: System::Windows::Forms::PictureBox^  playBut;
 
 	private: System::Windows::Forms::PictureBox^  nextSongBut;
-	private: System::Windows::Forms::PictureBox^  pervSongBut;
+	private: System::Windows::Forms::PictureBox^  prevSongBut;
+
 	private: System::Windows::Forms::PictureBox^  settingsBut;
 
 
@@ -88,7 +90,7 @@ namespace Player {
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->playBut = (gcnew System::Windows::Forms::PictureBox());
 			this->nextSongBut = (gcnew System::Windows::Forms::PictureBox());
-			this->pervSongBut = (gcnew System::Windows::Forms::PictureBox());
+			this->prevSongBut = (gcnew System::Windows::Forms::PictureBox());
 			this->leftPanel = (gcnew System::Windows::Forms::Panel());
 			this->SettingsLagel = (gcnew System::Windows::Forms::Label());
 			this->settingsBut = (gcnew System::Windows::Forms::PictureBox());
@@ -106,7 +108,7 @@ namespace Player {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->playBut))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nextSongBut))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pervSongBut))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->prevSongBut))->BeginInit();
 			this->leftPanel->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->settingsBut))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->panelBut))->BeginInit();
@@ -161,19 +163,19 @@ namespace Player {
 			this->nextSongBut->MouseEnter += gcnew System::EventHandler(this, &MyForm::nextSongBut_MouseEnter);
 			this->nextSongBut->MouseLeave += gcnew System::EventHandler(this, &MyForm::nextSongBut_MouseLeave);
 			// 
-			// pervSongBut
+			// prevSongBut
 			// 
-			this->pervSongBut->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
-			this->pervSongBut->BackColor = System::Drawing::Color::Transparent;
-			this->pervSongBut->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pervSongBut.BackgroundImage")));
-			this->pervSongBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pervSongBut.Image")));
-			this->pervSongBut->Location = System::Drawing::Point(255, 330);
-			this->pervSongBut->Name = L"pervSongBut";
-			this->pervSongBut->Size = System::Drawing::Size(50, 50);
-			this->pervSongBut->TabIndex = 10;
-			this->pervSongBut->TabStop = false;
-			this->pervSongBut->MouseEnter += gcnew System::EventHandler(this, &MyForm::pervSongBut_MouseEnter_1);
-			this->pervSongBut->MouseLeave += gcnew System::EventHandler(this, &MyForm::pervSongBut_MouseLeave);
+			this->prevSongBut->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->prevSongBut->BackColor = System::Drawing::Color::Transparent;
+			this->prevSongBut->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"prevSongBut.BackgroundImage")));
+			this->prevSongBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"prevSongBut.Image")));
+			this->prevSongBut->Location = System::Drawing::Point(255, 330);
+			this->prevSongBut->Name = L"prevSongBut";
+			this->prevSongBut->Size = System::Drawing::Size(50, 50);
+			this->prevSongBut->TabIndex = 10;
+			this->prevSongBut->TabStop = false;
+			this->prevSongBut->MouseEnter += gcnew System::EventHandler(this, &MyForm::pervSongBut_MouseEnter);
+			this->prevSongBut->MouseLeave += gcnew System::EventHandler(this, &MyForm::pervSongBut_MouseLeave);
 			// 
 			// leftPanel
 			// 
@@ -195,12 +197,12 @@ namespace Player {
 			this->SettingsLagel->AutoSize = true;
 			this->SettingsLagel->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(225)), static_cast<System::Int32>(static_cast<System::Byte>(226)),
 				static_cast<System::Int32>(static_cast<System::Byte>(225)));
-			this->SettingsLagel->Font = (gcnew System::Drawing::Font(L"Rockwell", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->SettingsLagel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->SettingsLagel->ForeColor = System::Drawing::SystemColors::Desktop;
 			this->SettingsLagel->Location = System::Drawing::Point(46, 67);
 			this->SettingsLagel->Name = L"SettingsLagel";
-			this->SettingsLagel->Size = System::Drawing::Size(86, 23);
+			this->SettingsLagel->Size = System::Drawing::Size(90, 25);
 			this->SettingsLagel->TabIndex = 13;
 			this->SettingsLagel->Text = L"Settings";
 			this->SettingsLagel->MouseEnter += gcnew System::EventHandler(this, &MyForm::SettingsLagel_MouseEnter);
@@ -261,11 +263,11 @@ namespace Player {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Rockwell", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label1->Location = System::Drawing::Point(3, 9);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(92, 27);
+			this->label1->Size = System::Drawing::Size(89, 29);
 			this->label1->TabIndex = 2;
 			this->label1->Text = L"Playlist";
 			// 
@@ -276,14 +278,14 @@ namespace Player {
 			this->listBox1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(236)), static_cast<System::Int32>(static_cast<System::Byte>(237)),
 				static_cast<System::Int32>(static_cast<System::Byte>(239)));
 			this->listBox1->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->listBox1->Font = (gcnew System::Drawing::Font(L"Rockwell", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->listBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->listBox1->FormattingEnabled = true;
-			this->listBox1->ItemHeight = 14;
+			this->listBox1->ItemHeight = 15;
 			this->listBox1->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"ctr", L"terte", L"ter", L"t" });
 			this->listBox1->Location = System::Drawing::Point(0, 50);
 			this->listBox1->Name = L"listBox1";
-			this->listBox1->Size = System::Drawing::Size(273, 266);
+			this->listBox1->Size = System::Drawing::Size(273, 255);
 			this->listBox1->TabIndex = 0;
 			// 
 			// openFileDialog1
@@ -310,11 +312,11 @@ namespace Player {
 			this->songName->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->songName->AutoSize = true;
-			this->songName->Font = (gcnew System::Drawing::Font(L"Rockwell", 27.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->songName->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 27.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->songName->Location = System::Drawing::Point(50, 96);
 			this->songName->Name = L"songName";
-			this->songName->Size = System::Drawing::Size(203, 42);
+			this->songName->Size = System::Drawing::Size(205, 42);
 			this->songName->TabIndex = 15;
 			this->songName->Text = L"SongName";
 			// 
@@ -360,7 +362,7 @@ namespace Player {
 			this->Controls->Add(this->trackBar2);
 			this->Controls->Add(this->trackBar1);
 			this->Controls->Add(this->leftPanel);
-			this->Controls->Add(this->pervSongBut);
+			this->Controls->Add(this->prevSongBut);
 			this->Controls->Add(this->nextSongBut);
 			this->Controls->Add(this->playBut);
 			this->Controls->Add(this->pictureBox2);
@@ -374,7 +376,7 @@ namespace Player {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->playBut))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nextSongBut))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pervSongBut))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->prevSongBut))->EndInit();
 			this->leftPanel->ResumeLayout(false);
 			this->leftPanel->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->settingsBut))->EndInit();
@@ -405,14 +407,19 @@ namespace Player {
 			 //Изменение пикчербоксов при входе мыши
 
 			 /**********************************************************************************************/
-	private: System::Void pervSongBut_MouseEnter_1(System::Object^  sender, System::EventArgs^  e)
+	private: System::Void pervSongBut_MouseEnter(System::Object^  sender, System::EventArgs^  e)
 	{
+		if (prevSongBut->Image != nullptr)
+			delete prevSongBut->Image;
 
-		pervSongBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"prevsongenter")));
+		prevSongBut->Image = getBmpFromResource(IDB_BTN_PREV_SONG_ENTER);
 	}
 	private: System::Void pervSongBut_MouseLeave(System::Object^  sender, System::EventArgs^  e)
 	{
-		pervSongBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"prevsong")));
+		if (prevSongBut->Image != nullptr)
+			delete prevSongBut->Image;
+
+		prevSongBut->Image = getBmpFromResource(IDB_BTN_PREV_SONG);
 	}
 	private: System::Void nextSongBut_MouseEnter(System::Object^  sender, System::EventArgs^  e)
 	{
@@ -563,5 +570,8 @@ namespace Player {
 		listBox1->Items->Add(openFileDialog1->FileName);
 		songName->Text = openFileDialog1->FileName;
 	}
+
+	private: Bitmap^ getBmpFromResource(unsigned long resourceID);
+	
 };
 }

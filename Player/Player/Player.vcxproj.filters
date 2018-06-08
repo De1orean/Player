@@ -23,6 +23,9 @@
     <ClInclude Include="MyForm.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MyForm.resx">
@@ -30,61 +33,69 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Resources\bottompanel.png">
+    <ResourceCompile Include="Player.rc">
       <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="..\Resources\middlepanel.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="..\Resources\leftpanel.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="..\Resources\play.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="..\Resources\nextsong.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="..\Resources\prevsong.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="..\Resources\pause.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="..\Resources\play1.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="..\Resources\prevsongenter.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="..\Resources\pauseenter.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="..\Resources\playenter.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="..\Resources\nextsongenter.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="..\Resources\panelBut.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="..\Resources\settings.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
     <Image Include="..\Resources\icon.ico">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\Resources\settingsenter.png">
+    <Image Include="..\Resources\btn_nextsong.bmp">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\Resources\panelButenter.png">
+    <Image Include="..\Resources\btn_nextsong_enter.bmp">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\Resources\settingsenterbig.png">
+    <Image Include="..\Resources\btn_openfile.bmp">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\Resources\openfilebut.png">
+    <Image Include="..\Resources\btn_panel.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\btn_panel_enter.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\btn_pause.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\btn_pause_enter.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\btn_play.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\btn_play_enter.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\btn_play_green.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\btn_prevsong.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\btn_prevsong_enter.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\btn_settings.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\btn_settings_enter.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\btn_settings_enter_big.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\panel_bottom.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\panel_left.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\panel_middle.bmp">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\Resources\volume.bmp">
       <Filter>Файлы ресурсов</Filter>
     </Image>
   </ItemGroup>
