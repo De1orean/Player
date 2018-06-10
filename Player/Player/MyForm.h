@@ -78,7 +78,7 @@ namespace Player {
 		/// ќб€зательна€ переменна€ конструктора.
 		/// </summary>
 		System::ComponentModel::Container ^components;
-
+		bool isPlaying = false;
 #pragma region Windows Form Designer generated code
 		/// <summary>
 		/// “ребуемый метод дл€ поддержки конструктора Ч не измен€йте 
@@ -409,28 +409,23 @@ namespace Player {
 			 /**********************************************************************************************/
 	private: System::Void pervSongBut_MouseEnter(System::Object^  sender, System::EventArgs^  e)
 	{
-		if (prevSongBut->Image != nullptr)
-			delete prevSongBut->Image;
-
-		prevSongBut->Image = getBmpFromResource(IDB_BTN_PREV_SONG_ENTER);
+		getBmpFromResource(prevSongBut, IDB_BTN_PREV_SONG_ENTER);
 	}
+
 	private: System::Void pervSongBut_MouseLeave(System::Object^  sender, System::EventArgs^  e)
 	{
-		if (prevSongBut->Image != nullptr)
-			delete prevSongBut->Image;
-
-		prevSongBut->Image = getBmpFromResource(IDB_BTN_PREV_SONG);
+		getBmpFromResource(prevSongBut, IDB_BTN_PREV_SONG);
 	}
 	private: System::Void nextSongBut_MouseEnter(System::Object^  sender, System::EventArgs^  e)
 	{
-		nextSongBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"nextsongenter")));
+		getBmpFromResource(nextSongBut, IDB_BTN_NEXT_SONG_ENTER);
 	}
 
 	private: System::Void nextSongBut_MouseLeave(System::Object^  sender, System::EventArgs^  e)
 	{
-		nextSongBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"nextsong")));
-
+		getBmpFromResource(nextSongBut, IDB_BTN_NEXT_SONG);
 	}
+
 	private: System::Void panelBut_MouseEnter(System::Object^  sender, System::EventArgs^  e)
 	{
 		panelBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panelButenter")));
@@ -484,21 +479,15 @@ namespace Player {
 			 /**********************************************************************************************/
 	private: System::Void playBut_Click(System::Object^  sender, System::EventArgs^  e)
 	{
-		if (check == true)
+		if (isPlaying)
 		{
-			if (playCheck == true)
-				playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pauseenter")));
-			else
-				playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pause")));
-			check = false;
+			isPlaying = false;
+			getBmpFromResource(playBut, IDB_BTN_PLAY_ENTER);
 		}
 		else
 		{
-			if (playCheck == true)
-				playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"playenter")));
-			else
-				playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"play")));
-			check = true;
+			isPlaying = true;
+			getBmpFromResource(playBut, IDB_BTN_PAUSE_ENTER);
 		}
 	}
 			 /**********************************************************************************************/
@@ -506,23 +495,27 @@ namespace Player {
 			 //изменение плей при наведении
 
 			 /**********************************************************************************************/
-	private: System::Void playBut_MouseEnter(System::Object^  sender, System::EventArgs^  e) {
-		playCheck = true;
-		if (check == true)
+	private: System::Void playBut_MouseEnter(System::Object^  sender, System::EventArgs^  e)
+	{
+		if (isPlaying)
 		{
-			playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"playenter")));
+			getBmpFromResource(playBut, IDB_BTN_PAUSE_ENTER);
 		}
 		else
-			playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pauseenter")));
+		{
+			getBmpFromResource(playBut, IDB_BTN_PLAY_ENTER);
+		}
 	}
-	private: System::Void playBut_MouseLeave(System::Object^  sender, System::EventArgs^  e) {
-		playCheck = false;
-		if (check == true)
+	private: System::Void playBut_MouseLeave(System::Object^  sender, System::EventArgs^  e)
+	{
+		if (isPlaying)
 		{
-			playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"play")));
+			getBmpFromResource(playBut, IDB_BTN_PAUSE);
 		}
 		else
-			playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pause")));
+		{
+			getBmpFromResource(playBut, IDB_BTN_PLAY);
+		}
 	}
 			 /**********************************************************************************************/
 
@@ -550,9 +543,6 @@ namespace Player {
 		}
 	}
 
-
-
-
 	private: System::Void settingsBut_Click(System::Object^  sender, System::EventArgs^  e) {
 	}
 
@@ -564,14 +554,13 @@ namespace Player {
 		}
 	}
 
-
 	private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e)
 	{
 		listBox1->Items->Add(openFileDialog1->FileName);
 		songName->Text = openFileDialog1->FileName;
 	}
 
-	private: Bitmap^ getBmpFromResource(unsigned long resourceID);
+	private: void getBmpFromResource(System::Windows::Forms::PictureBox^ picBox, unsigned long resourceID);
 	
 };
 }
