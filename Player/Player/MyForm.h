@@ -4,6 +4,20 @@
 #include <list>
 #include <iterator>
 #include "resource.h"
+#include "Mp3.h"
+
+//struct Name
+//{
+//	std::string shortName;
+//	std::string path;
+//};
+//
+//struct playList
+//{
+//	playList* prevSong;
+//	playList* nextSong;
+//	Name* songname;
+//};
 
 namespace Player {
 
@@ -79,6 +93,8 @@ namespace Player {
 		/// </summary>
 		System::ComponentModel::Container ^components;
 		bool isPlaying = false;
+		Mp3* Mp3Player= new Mp3;
+
 #pragma region Windows Form Designer generated code
 		/// <summary>
 		/// “ребуемый метод дл€ поддержки конструктора Ч не измен€йте 
@@ -282,7 +298,6 @@ namespace Player {
 				static_cast<System::Byte>(0)));
 			this->listBox1->FormattingEnabled = true;
 			this->listBox1->ItemHeight = 15;
-			this->listBox1->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"ctr", L"terte", L"ter", L"t" });
 			this->listBox1->Location = System::Drawing::Point(0, 50);
 			this->listBox1->Name = L"listBox1";
 			this->listBox1->Size = System::Drawing::Size(273, 255);
@@ -372,6 +387,7 @@ namespace Player {
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"MyForm";
 			this->Text = L"Blueberry";
+			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &MyForm::MyForm_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->playBut))->EndInit();
@@ -400,7 +416,7 @@ namespace Player {
 		/**********************************************************************************************/
 	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e)
 	{
-		//volumeBar->BackColor = 
+	LoadFromFile("base.txt", this->listBox1);
 	}
 			 /**********************************************************************************************/
 
@@ -428,47 +444,47 @@ namespace Player {
 
 	private: System::Void panelBut_MouseEnter(System::Object^  sender, System::EventArgs^  e)
 	{
-		panelBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panelButenter")));
+		getBmpFromResource(panelBut, IDB_BTN_PANEL_ENTER);
 	}
 	private: System::Void panelBut_MouseLeave(System::Object^  sender, System::EventArgs^  e)
 	{
-		panelBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panelBut")));
+		getBmpFromResource(panelBut, IDB_BTN_PANEL);
 	}
 
 	private: System::Void settingsBut_MouseEnter(System::Object^  sender, System::EventArgs^  e)
 	{
 		if (settingsBut->Width < 150)
 		{
-			settingsBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"settingsenter")));
+			getBmpFromResource(settingsBut, IDB_BTN_SETTINGS_ENTER_BIG);
 
 		}
 		else
 		{
-			settingsBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"settingsenterbig")));
+			getBmpFromResource(settingsBut, IDB_BTN_SETTINGS_ENTER_BIG);
 			SettingsLagel->BackColor = System::Drawing::Color::FromArgb(255, 206, 206, 206);
 		}
 	}
 	private: System::Void settingsBut_MouseLeave(System::Object^  sender, System::EventArgs^  e)
 	{
-		settingsBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"settings")));
+		getBmpFromResource(settingsBut, IDB_BTN_SETTINGS);
 		SettingsLagel->BackColor = System::Drawing::Color::FromArgb(255, 225, 226, 225);
 	}
 	private: System::Void pictureBox1_MouseEnter(System::Object^  sender, System::EventArgs^  e)
 	{
-		pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"openfilebut")));
+		getBmpFromResource(pictureBox1, IDB_BTN_OPEN_FILE);
 	}
 	private: System::Void pictureBox1_MouseLeave(System::Object^  sender, System::EventArgs^  e)
 	{
-		pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
+		getBmpFromResource(pictureBox1, IDB_BTN_OPEN_FILE);
 	}
 	private: System::Void SettingsLagel_MouseEnter(System::Object^  sender, System::EventArgs^  e)
 	{
-		settingsBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"settingsenterbig")));
+		getBmpFromResource(settingsBut, IDB_BTN_SETTINGS_ENTER);
 		SettingsLagel->BackColor = System::Drawing::Color::FromArgb(255, 206, 206, 206);
 	}
 	private: System::Void SettingsLagel_MouseLeave(System::Object^  sender, System::EventArgs^  e)
 	{
-		settingsBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"settings")));
+		getBmpFromResource(settingsBut, IDB_BTN_SETTINGS);
 		SettingsLagel->BackColor = System::Drawing::Color::FromArgb(255, 225, 226, 225);
 	}
 
@@ -483,11 +499,15 @@ namespace Player {
 		{
 			isPlaying = false;
 			getBmpFromResource(playBut, IDB_BTN_PLAY_ENTER);
+			Mp3Player->Pause();
 		}
 		else
 		{
 			isPlaying = true;
 			getBmpFromResource(playBut, IDB_BTN_PAUSE_ENTER);
+			Mp3Player->Load(StringtoLPCWSTR(listBox1->Items[0]->ToString()));
+			Mp3Player->Play();
+			//Mp3Player->
 		}
 	}
 			 /**********************************************************************************************/
@@ -561,6 +581,22 @@ namespace Player {
 	}
 
 	private: void getBmpFromResource(System::Windows::Forms::PictureBox^ picBox, unsigned long resourceID);
+
+	private: std::wstring s2ws(const std::string& s);
 	
+	private:	LPCWSTR StringtoLPCWSTR(System::String ^ s);
+
+
+	private: void LoadFromFile(String ^File, ListBox^  listBox1);
+
+	private: void SaveToFile(String ^File, ListBox^  listBox1);
+	
+private: System::Void MyForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) 
+{
+	SaveToFile("base.txt", this->listBox1);
+}
+
+
 };
+
 }
