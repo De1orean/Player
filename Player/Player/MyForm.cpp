@@ -1,15 +1,10 @@
 #include "MyForm.h"
-#include <Windows.h>
-#include <vcclr.h>
 
 using namespace System;
 using namespace System::Windows::Forms;
 using namespace System::Drawing;
 using namespace System::Reflection;
 using namespace System::Runtime::InteropServices;
-
-
-
 
 [STAThreadAttribute]
 //function main
@@ -49,13 +44,7 @@ std::wstring Player::MyForm::s2ws(const std::string& s)
 	return r;
 }
 
-LPCWSTR Player::MyForm::StringtoLPCWSTR(System::String^ s)
-{
-	pin_ptr<const wchar_t> wname = PtrToStringChars(s);
-	return wname;
-}
-
-void Player::MyForm::LoadFromFile(String ^File, ListBox^  listBox1)
+void Player::MyForm::LoadFromFile(String ^File, ListBox^ listBox1)
 { //чтение из файла
 	String ^d, ^b;
 	listBox1->Items->Clear();
@@ -88,4 +77,25 @@ void Player::MyForm::SaveToFile(String ^File, ListBox^  listBox1)
 		b += a->Concat(a, "\n");
 	}
 	System::IO::File::AppendAllText(File, b);
+}
+
+/* Return TRUE if file 'fileName' exists */
+bool Player::MyForm::FileExists(const TCHAR *fileName)
+{
+	DWORD fileAttr;
+
+	fileAttr = GetFileAttributes(fileName);
+	if (0xFFFFFFFF == fileAttr)
+		return false;
+	return true;
+}
+
+int Player::MyForm::GetVolume()
+{
+	/*int vol = volumeBar.Value;
+	vol = 10000 - vol;
+	vol = -vol;
+	
+	return vol;*/
+	return 0;
 }

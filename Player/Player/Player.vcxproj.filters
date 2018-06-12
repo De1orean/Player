@@ -18,7 +18,7 @@
     <ClCompile Include="MyForm.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Mp3.cpp">
+    <ClCompile Include="LibMP3DLL.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,8 +29,8 @@
     <ClInclude Include="resource.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Mp3.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="LibMP3DLL.h">
+      <Filter>Исходные файлы</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

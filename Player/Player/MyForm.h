@@ -1,10 +1,12 @@
 
-#pragma 
+#pragma once
 #include <string>
 #include <list>
 #include <iterator>
+#include <vcclr.h>
+#include <Windows.h>
+#include "LibMP3DLL.h"
 #include "resource.h"
-#include "Mp3.h"
 
 //struct Name
 //{
@@ -39,9 +41,11 @@ namespace Player {
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::PictureBox^  pictureBox3;
 	private: System::Windows::Forms::Label^  songName;
+	private: System::Windows::Forms::TrackBar^  progressBar;
 
-	private: System::Windows::Forms::TrackBar^  trackBar1;
-	private: System::Windows::Forms::TrackBar^  trackBar2;
+
+	private: System::Windows::Forms::TrackBar^  volumeBar;
+
 	private: System::Windows::Forms::PictureBox^  pictureBox4;
 
 	public:
@@ -53,6 +57,12 @@ namespace Player {
 			//
 			//TODO: добавьте код конструктора
 			//
+			m_playerDll = new CLibMP3DLL();
+			m_playerDll->LoadDLL(L"LibMP3DLL.dll");
+
+			isPlaying = false;
+			pause = false;
+
 		}
 
 	protected:
@@ -92,8 +102,10 @@ namespace Player {
 		/// Обязательная переменная конструктора.
 		/// </summary>
 		System::ComponentModel::Container ^components;
+		CLibMP3DLL* m_playerDll;
 		bool isPlaying = false;
-		Mp3* Mp3Player= new Mp3;
+		bool pause;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -118,8 +130,8 @@ namespace Player {
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
 			this->songName = (gcnew System::Windows::Forms::Label());
-			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
-			this->trackBar2 = (gcnew System::Windows::Forms::TrackBar());
+			this->progressBar = (gcnew System::Windows::Forms::TrackBar());
+			this->volumeBar = (gcnew System::Windows::Forms::TrackBar());
 			this->pictureBox4 = (gcnew System::Windows::Forms::PictureBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->playBut))->BeginInit();
@@ -131,8 +143,8 @@ namespace Player {
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->progressBar))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->volumeBar))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -335,25 +347,25 @@ namespace Player {
 			this->songName->TabIndex = 15;
 			this->songName->Text = L"SongName";
 			// 
-			// trackBar1
+			// progressBar
 			// 
-			this->trackBar1->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
-			this->trackBar1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(89)), static_cast<System::Int32>(static_cast<System::Byte>(101)),
+			this->progressBar->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->progressBar->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(89)), static_cast<System::Int32>(static_cast<System::Byte>(101)),
 				static_cast<System::Int32>(static_cast<System::Byte>(111)));
-			this->trackBar1->Location = System::Drawing::Point(12, 330);
-			this->trackBar1->Name = L"trackBar1";
-			this->trackBar1->Size = System::Drawing::Size(225, 45);
-			this->trackBar1->TabIndex = 16;
+			this->progressBar->Location = System::Drawing::Point(12, 330);
+			this->progressBar->Name = L"progressBar";
+			this->progressBar->Size = System::Drawing::Size(225, 45);
+			this->progressBar->TabIndex = 16;
 			// 
-			// trackBar2
+			// volumeBar
 			// 
-			this->trackBar2->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
-			this->trackBar2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(89)), static_cast<System::Int32>(static_cast<System::Byte>(101)),
+			this->volumeBar->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->volumeBar->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(89)), static_cast<System::Int32>(static_cast<System::Byte>(101)),
 				static_cast<System::Int32>(static_cast<System::Byte>(111)));
-			this->trackBar2->Location = System::Drawing::Point(512, 330);
-			this->trackBar2->Name = L"trackBar2";
-			this->trackBar2->Size = System::Drawing::Size(168, 45);
-			this->trackBar2->TabIndex = 17;
+			this->volumeBar->Location = System::Drawing::Point(512, 330);
+			this->volumeBar->Name = L"volumeBar";
+			this->volumeBar->Size = System::Drawing::Size(168, 45);
+			this->volumeBar->TabIndex = 17;
 			// 
 			// pictureBox4
 			// 
@@ -374,8 +386,8 @@ namespace Player {
 			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(692, 398);
 			this->Controls->Add(this->pictureBox4);
-			this->Controls->Add(this->trackBar2);
-			this->Controls->Add(this->trackBar1);
+			this->Controls->Add(this->volumeBar);
+			this->Controls->Add(this->progressBar);
 			this->Controls->Add(this->leftPanel);
 			this->Controls->Add(this->prevSongBut);
 			this->Controls->Add(this->nextSongBut);
@@ -401,8 +413,8 @@ namespace Player {
 			this->panel1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox3))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->progressBar))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->volumeBar))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox4))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -499,14 +511,14 @@ namespace Player {
 		{
 			isPlaying = false;
 			getBmpFromResource(playBut, IDB_BTN_PLAY_ENTER);
-			Mp3Player->Pause();
+			//Mp3Player->Pause();
 		}
 		else
 		{
 			isPlaying = true;
 			getBmpFromResource(playBut, IDB_BTN_PAUSE_ENTER);
-			Mp3Player->Load(StringtoLPCWSTR(listBox1->Items[0]->ToString()));
-			Mp3Player->Play();
+			//Mp3Player->Load(StringtoLPCWSTR(listBox1->Items[0]->ToString()));
+			//Mp3Player->Play();
 			//Mp3Player->
 		}
 	}
@@ -584,19 +596,22 @@ namespace Player {
 
 	private: std::wstring s2ws(const std::string& s);
 	
-	private:	LPCWSTR StringtoLPCWSTR(System::String ^ s);
-
-
-	private: void LoadFromFile(String ^File, ListBox^  listBox1);
+	private: LPCWSTR StringtoLPCWSTR(String^ s)
+	{
+		pin_ptr<const wchar_t> wname = PtrToStringChars(s);
+		return wname;
+	};
+	private: void LoadFromFile(String^ File, ListBox^ listBox1);
 
 	private: void SaveToFile(String ^File, ListBox^  listBox1);
 	
-private: System::Void MyForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) 
-{
-	SaveToFile("base.txt", this->listBox1);
-}
-
-
+	private: System::Void MyForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) 
+	{
+		SaveToFile("base.txt", this->listBox1);
+	}
+	private:
+		static bool FileExists(const TCHAR *fileName);
+		int GetVolume();
 };
 
 }

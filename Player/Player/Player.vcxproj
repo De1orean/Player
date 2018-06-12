@@ -135,11 +135,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Mp3.cpp" />
+    <ClCompile Include="LibMP3DLL.cpp" />
     <ClCompile Include="MyForm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Mp3.h" />
+    <ClInclude Include="LibMP3DLL.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
