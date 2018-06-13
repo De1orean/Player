@@ -58,7 +58,15 @@ namespace Player {
 			//TODO: добавьте код конструктора
 			//
 			m_playerDll = new CLibMP3DLL();
-			m_playerDll->LoadDLL(L"LibMP3DLL.dll");
+			if (m_playerDll->LoadDLL(L"LibMP3DLL.dll"))
+			{
+				m_playerDll->SetVolume(0);
+			}
+			else
+			{
+				MessageBox::Show("LibMP3DLL.dll is not loaded!\nClosing application...", "Error");
+				exit(1);
+			}
 
 			isPlaying = false;
 			pause = false;
@@ -74,6 +82,20 @@ namespace Player {
 			if (components)
 			{
 				delete components;
+			}
+
+			if (isPlaying)
+			{
+				isPlaying = false;
+				m_playerDll->Stop();
+			}
+
+			if (m_playerDll)
+			{
+				m_playerDll->Cleanup();
+				m_playerDll->UnloadDLL();
+				delete m_playerDll;
+				m_playerDll = nullptr;
 			}
 		}
 
@@ -511,12 +533,15 @@ namespace Player {
 		{
 			isPlaying = false;
 			getBmpFromResource(playBut, IDB_BTN_PLAY_ENTER);
-			//Mp3Player->Pause();
+			m_playerDll->Pause();
 		}
 		else
 		{
-			isPlaying = true;
-			getBmpFromResource(playBut, IDB_BTN_PAUSE_ENTER);
+			if (m_playerDll->Load(L"../song_to_play.mp3") && m_playerDll->Play())
+			{
+				isPlaying = true;
+				getBmpFromResource(playBut, IDB_BTN_PAUSE_ENTER);
+			}
 			//Mp3Player->Load(StringtoLPCWSTR(listBox1->Items[0]->ToString()));
 			//Mp3Player->Play();
 			//Mp3Player->
