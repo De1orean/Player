@@ -47,6 +47,12 @@ namespace Player {
 	private: System::Windows::Forms::TrackBar^  volumeBar;
 
 	private: System::Windows::Forms::PictureBox^  pictureBox4;
+	private: System::Windows::Forms::Timer^  updateTimer;
+	private: System::Windows::Forms::Label^  songDurationLabel;
+	private: System::Windows::Forms::Label^  currentPositionLabel;
+
+
+
 
 	public:
 		bool playCheck = false;
@@ -70,6 +76,7 @@ namespace Player {
 
 			isPlaying = false;
 			pause = false;
+			m_songDuration = 0;
 
 		}
 
@@ -116,6 +123,7 @@ namespace Player {
 	private: System::Windows::Forms::PictureBox^  prevSongBut;
 
 	private: System::Windows::Forms::PictureBox^  settingsBut;
+	private: System::ComponentModel::IContainer^  components;
 
 
 
@@ -123,10 +131,11 @@ namespace Player {
 		/// <summary>
 		/// Обязательная переменная конструктора.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 		CLibMP3DLL* m_playerDll;
 		bool isPlaying = false;
 		bool pause;
+		unsigned int m_songDuration;
 
 
 #pragma region Windows Form Designer generated code
@@ -136,6 +145,7 @@ namespace Player {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->playBut = (gcnew System::Windows::Forms::PictureBox());
@@ -155,6 +165,9 @@ namespace Player {
 			this->progressBar = (gcnew System::Windows::Forms::TrackBar());
 			this->volumeBar = (gcnew System::Windows::Forms::TrackBar());
 			this->pictureBox4 = (gcnew System::Windows::Forms::PictureBox());
+			this->updateTimer = (gcnew System::Windows::Forms::Timer(this->components));
+			this->songDurationLabel = (gcnew System::Windows::Forms::Label());
+			this->currentPositionLabel = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->playBut))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nextSongBut))->BeginInit();
@@ -375,6 +388,7 @@ namespace Player {
 			this->progressBar->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(89)), static_cast<System::Int32>(static_cast<System::Byte>(101)),
 				static_cast<System::Int32>(static_cast<System::Byte>(111)));
 			this->progressBar->Location = System::Drawing::Point(12, 330);
+			this->progressBar->Maximum = 100;
 			this->progressBar->Name = L"progressBar";
 			this->progressBar->Size = System::Drawing::Size(225, 45);
 			this->progressBar->TabIndex = 16;
@@ -401,12 +415,43 @@ namespace Player {
 			this->pictureBox4->TabIndex = 18;
 			this->pictureBox4->TabStop = false;
 			// 
+			// updateTimer
+			// 
+			this->updateTimer->Enabled = true;
+			this->updateTimer->Interval = 1000;
+			this->updateTimer->Tick += gcnew System::EventHandler(this, &MyForm::updateTimer_Timeout);
+			// 
+			// songDurationLabel
+			// 
+			this->songDurationLabel->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->songDurationLabel->AutoSize = true;
+			this->songDurationLabel->BackColor = System::Drawing::SystemColors::GrayText;
+			this->songDurationLabel->FlatStyle = System::Windows::Forms::FlatStyle::System;
+			this->songDurationLabel->Location = System::Drawing::Point(200, 362);
+			this->songDurationLabel->Name = L"songDurationLabel";
+			this->songDurationLabel->Size = System::Drawing::Size(28, 13);
+			this->songDurationLabel->TabIndex = 19;
+			this->songDurationLabel->Text = L"0:00";
+			// 
+			// currentPositionLabel
+			// 
+			this->currentPositionLabel->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->currentPositionLabel->AutoSize = true;
+			this->currentPositionLabel->BackColor = System::Drawing::SystemColors::GrayText;
+			this->currentPositionLabel->Location = System::Drawing::Point(25, 362);
+			this->currentPositionLabel->Name = L"currentPositionLabel";
+			this->currentPositionLabel->Size = System::Drawing::Size(28, 13);
+			this->currentPositionLabel->TabIndex = 20;
+			this->currentPositionLabel->Text = L"0:00";
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(692, 398);
+			this->Controls->Add(this->currentPositionLabel);
+			this->Controls->Add(this->songDurationLabel);
 			this->Controls->Add(this->pictureBox4);
 			this->Controls->Add(this->volumeBar);
 			this->Controls->Add(this->progressBar);
@@ -633,6 +678,26 @@ namespace Player {
 	private: System::Void MyForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) 
 	{
 		SaveToFile("base.txt", this->listBox1);
+	}
+
+	private: System::Void updateTimer_Timeout(System::Object^  sender, System::EventArgs^  e)
+	{
+		if(isPlaying)
+			//TODO: getCurrentPosition dll method should be invoked here
+			// this value should be assigned to progressBar->Value
+			// currentPositionLabel and songDurationLabel must be updated
+			// private field m_songDuration stores duration of currently playing song
+
+			if (progressBar->Value < progressBar->Maximum - 1)
+			{
+				progressBar->Value++;
+				unsigned short current_sec = progressBar->Value % 60;
+
+				currentPositionLabel->Text = System::Convert::ToString(progressBar->Value / 60) + ":" + ((current_sec < 10)? "0"+System::Convert::ToString(current_sec):System::Convert::ToString(current_sec));
+				songDurationLabel->Text =  System::Convert::ToString(progressBar->Maximum / 60) + ":" + System::Convert::ToString(progressBar->Maximum % 60);
+			}
+			else
+				progressBar->Value = 0;
 	}
 	private:
 		static bool FileExists(const TCHAR *fileName);
