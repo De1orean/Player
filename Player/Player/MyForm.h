@@ -8,6 +8,10 @@
 #include "LibMP3DLL.h"
 #include "resource.h"
 
+#define not !
+#define and &&
+#define or ||
+
 //struct Name
 //{
 //	std::string shortName;
@@ -54,30 +58,28 @@ namespace Player {
 
 
 
+
 	public:
 		bool playCheck = false;
 	public:
-		MyForm(void)
+		MyForm(void):
+			isPlaying(false),
+			pause(false),
+			m_songDuration(0),
+			m_currentVolume(0),
+			m_currentPosition(0),
+			m_step(0)
 		{
 			InitializeComponent();
 			//
 			//TODO: добавьте код конструктора
 			//
 			m_playerDll = new CLibMP3DLL();
-			if (m_playerDll->LoadDLL(L"LibMP3DLL.dll"))
-			{
-				m_playerDll->SetVolume(0);
-			}
-			else
+			if (not m_playerDll->LoadDLL(L"LibMP3DLL.dll"))
 			{
 				MessageBox::Show("LibMP3DLL.dll is not loaded!\nClosing application...", "Error");
 				exit(1);
 			}
-
-			isPlaying = false;
-			pause = false;
-			m_songDuration = 0;
-
 		}
 
 	protected:
@@ -136,7 +138,14 @@ namespace Player {
 		bool isPlaying = false;
 		bool pause;
 		unsigned int m_songDuration;
+		int m_currentVolume;
+		unsigned int m_currentPosition;
+		unsigned int m_step;
 
+	private:
+		static bool FileExists(const TCHAR *fileName);
+		void updateVolume();
+		void updateProgressLabels();
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -189,9 +198,9 @@ namespace Player {
 			this->pictureBox2->Cursor = System::Windows::Forms::Cursors::Arrow;
 			this->pictureBox2->Dock = System::Windows::Forms::DockStyle::Bottom;
 			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox2.Image")));
-			this->pictureBox2->Location = System::Drawing::Point(0, 308);
+			this->pictureBox2->Location = System::Drawing::Point(0, 288);
 			this->pictureBox2->Name = L"pictureBox2";
-			this->pictureBox2->Size = System::Drawing::Size(692, 90);
+			this->pictureBox2->Size = System::Drawing::Size(692, 110);
 			this->pictureBox2->TabIndex = 7;
 			this->pictureBox2->TabStop = false;
 			// 
@@ -202,7 +211,7 @@ namespace Player {
 			this->playBut->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"playBut.BackgroundImage")));
 			this->playBut->Cursor = System::Windows::Forms::Cursors::Arrow;
 			this->playBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"playBut.Image")));
-			this->playBut->Location = System::Drawing::Point(311, 318);
+			this->playBut->Location = System::Drawing::Point(311, 323);
 			this->playBut->Name = L"playBut";
 			this->playBut->Size = System::Drawing::Size(70, 70);
 			this->playBut->TabIndex = 8;
@@ -218,7 +227,7 @@ namespace Player {
 			this->nextSongBut->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"nextSongBut.BackgroundImage")));
 			this->nextSongBut->Cursor = System::Windows::Forms::Cursors::Arrow;
 			this->nextSongBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"nextSongBut.Image")));
-			this->nextSongBut->Location = System::Drawing::Point(387, 330);
+			this->nextSongBut->Location = System::Drawing::Point(387, 334);
 			this->nextSongBut->Name = L"nextSongBut";
 			this->nextSongBut->Size = System::Drawing::Size(50, 50);
 			this->nextSongBut->TabIndex = 9;
@@ -232,7 +241,7 @@ namespace Player {
 			this->prevSongBut->BackColor = System::Drawing::Color::Transparent;
 			this->prevSongBut->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"prevSongBut.BackgroundImage")));
 			this->prevSongBut->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"prevSongBut.Image")));
-			this->prevSongBut->Location = System::Drawing::Point(255, 330);
+			this->prevSongBut->Location = System::Drawing::Point(255, 334);
 			this->prevSongBut->Name = L"prevSongBut";
 			this->prevSongBut->Size = System::Drawing::Size(50, 50);
 			this->prevSongBut->TabIndex = 10;
@@ -252,7 +261,7 @@ namespace Player {
 			this->leftPanel->ForeColor = System::Drawing::Color::Transparent;
 			this->leftPanel->Location = System::Drawing::Point(0, 0);
 			this->leftPanel->Name = L"leftPanel";
-			this->leftPanel->Size = System::Drawing::Size(44, 308);
+			this->leftPanel->Size = System::Drawing::Size(44, 288);
 			this->leftPanel->TabIndex = 11;
 			// 
 			// SettingsLagel
@@ -307,7 +316,7 @@ namespace Player {
 			this->panel1->Controls->Add(this->listBox1);
 			this->panel1->Location = System::Drawing::Point(419, 0);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(273, 309);
+			this->panel1->Size = System::Drawing::Size(273, 288);
 			this->panel1->TabIndex = 12;
 			// 
 			// pictureBox1
@@ -347,7 +356,7 @@ namespace Player {
 			this->listBox1->ItemHeight = 15;
 			this->listBox1->Location = System::Drawing::Point(0, 50);
 			this->listBox1->Name = L"listBox1";
-			this->listBox1->Size = System::Drawing::Size(273, 255);
+			this->listBox1->Size = System::Drawing::Size(273, 240);
 			this->listBox1->TabIndex = 0;
 			// 
 			// openFileDialog1
@@ -384,13 +393,15 @@ namespace Player {
 			// 
 			// progressBar
 			// 
-			this->progressBar->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->progressBar->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->progressBar->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(89)), static_cast<System::Int32>(static_cast<System::Byte>(101)),
 				static_cast<System::Int32>(static_cast<System::Byte>(111)));
-			this->progressBar->Location = System::Drawing::Point(12, 330);
-			this->progressBar->Maximum = 100;
+			this->progressBar->LargeChange = 0;
+			this->progressBar->Location = System::Drawing::Point(12, 294);
+			this->progressBar->Maximum = 1000;
 			this->progressBar->Name = L"progressBar";
-			this->progressBar->Size = System::Drawing::Size(225, 45);
+			this->progressBar->Size = System::Drawing::Size(668, 45);
 			this->progressBar->TabIndex = 16;
 			// 
 			// volumeBar
@@ -398,10 +409,13 @@ namespace Player {
 			this->volumeBar->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
 			this->volumeBar->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(89)), static_cast<System::Int32>(static_cast<System::Byte>(101)),
 				static_cast<System::Int32>(static_cast<System::Byte>(111)));
-			this->volumeBar->Location = System::Drawing::Point(512, 330);
+			this->volumeBar->Location = System::Drawing::Point(512, 342);
+			this->volumeBar->Maximum = 50;
 			this->volumeBar->Name = L"volumeBar";
 			this->volumeBar->Size = System::Drawing::Size(168, 45);
 			this->volumeBar->TabIndex = 17;
+			this->volumeBar->Value = 35;
+			this->volumeBar->Scroll += gcnew System::EventHandler(this, &MyForm::volumeBar_Scroll);
 			// 
 			// pictureBox4
 			// 
@@ -409,7 +423,7 @@ namespace Player {
 			this->pictureBox4->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(89)), static_cast<System::Int32>(static_cast<System::Byte>(101)),
 				static_cast<System::Int32>(static_cast<System::Byte>(111)));
 			this->pictureBox4->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox4.Image")));
-			this->pictureBox4->Location = System::Drawing::Point(483, 330);
+			this->pictureBox4->Location = System::Drawing::Point(483, 342);
 			this->pictureBox4->Name = L"pictureBox4";
 			this->pictureBox4->Size = System::Drawing::Size(30, 30);
 			this->pictureBox4->TabIndex = 18;
@@ -418,16 +432,16 @@ namespace Player {
 			// updateTimer
 			// 
 			this->updateTimer->Enabled = true;
-			this->updateTimer->Interval = 1000;
+			this->updateTimer->Interval = 500;
 			this->updateTimer->Tick += gcnew System::EventHandler(this, &MyForm::updateTimer_Timeout);
 			// 
 			// songDurationLabel
 			// 
-			this->songDurationLabel->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->songDurationLabel->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
 			this->songDurationLabel->AutoSize = true;
 			this->songDurationLabel->BackColor = System::Drawing::SystemColors::GrayText;
 			this->songDurationLabel->FlatStyle = System::Windows::Forms::FlatStyle::System;
-			this->songDurationLabel->Location = System::Drawing::Point(200, 362);
+			this->songDurationLabel->Location = System::Drawing::Point(652, 321);
 			this->songDurationLabel->Name = L"songDurationLabel";
 			this->songDurationLabel->Size = System::Drawing::Size(28, 13);
 			this->songDurationLabel->TabIndex = 19;
@@ -435,10 +449,10 @@ namespace Player {
 			// 
 			// currentPositionLabel
 			// 
-			this->currentPositionLabel->Anchor = System::Windows::Forms::AnchorStyles::Bottom;
+			this->currentPositionLabel->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
 			this->currentPositionLabel->AutoSize = true;
 			this->currentPositionLabel->BackColor = System::Drawing::SystemColors::GrayText;
-			this->currentPositionLabel->Location = System::Drawing::Point(25, 362);
+			this->currentPositionLabel->Location = System::Drawing::Point(16, 321);
 			this->currentPositionLabel->Name = L"currentPositionLabel";
 			this->currentPositionLabel->Size = System::Drawing::Size(28, 13);
 			this->currentPositionLabel->TabIndex = 20;
@@ -454,15 +468,15 @@ namespace Player {
 			this->Controls->Add(this->songDurationLabel);
 			this->Controls->Add(this->pictureBox4);
 			this->Controls->Add(this->volumeBar);
-			this->Controls->Add(this->progressBar);
 			this->Controls->Add(this->leftPanel);
 			this->Controls->Add(this->prevSongBut);
 			this->Controls->Add(this->nextSongBut);
 			this->Controls->Add(this->playBut);
-			this->Controls->Add(this->pictureBox2);
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->songName);
 			this->Controls->Add(this->pictureBox3);
+			this->Controls->Add(this->progressBar);
+			this->Controls->Add(this->pictureBox2);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"MyForm";
 			this->Text = L"Blueberry";
@@ -576,20 +590,29 @@ namespace Player {
 	{
 		if (isPlaying)
 		{
-			isPlaying = false;
-			getBmpFromResource(playBut, IDB_BTN_PLAY_ENTER);
-			m_playerDll->Pause();
+			if (not pause)
+			{
+				pause = true;
+				getBmpFromResource(playBut, IDB_BTN_PLAY_ENTER);
+				m_playerDll->Pause();
+			}
+			else
+			{
+				pause = false;
+				m_playerDll->Play();
+				getBmpFromResource(playBut, IDB_BTN_PAUSE_ENTER);
+			}
 		}
 		else
 		{
 			if (m_playerDll->Load(L"../song_to_play.mp3") && m_playerDll->Play())
 			{
+				updateVolume();
 				isPlaying = true;
 				getBmpFromResource(playBut, IDB_BTN_PAUSE_ENTER);
+				m_songDuration = m_playerDll->GetDuration()/10000000;
+				updateProgressLabels();
 			}
-			//Mp3Player->Load(StringtoLPCWSTR(listBox1->Items[0]->ToString()));
-			//Mp3Player->Play();
-			//Mp3Player->
 		}
 	}
 			 /**********************************************************************************************/
@@ -599,7 +622,7 @@ namespace Player {
 			 /**********************************************************************************************/
 	private: System::Void playBut_MouseEnter(System::Object^  sender, System::EventArgs^  e)
 	{
-		if (isPlaying)
+		if (isPlaying and not pause)
 		{
 			getBmpFromResource(playBut, IDB_BTN_PAUSE_ENTER);
 		}
@@ -610,7 +633,7 @@ namespace Player {
 	}
 	private: System::Void playBut_MouseLeave(System::Object^  sender, System::EventArgs^  e)
 	{
-		if (isPlaying)
+		if (isPlaying and not pause)
 		{
 			getBmpFromResource(playBut, IDB_BTN_PAUSE);
 		}
@@ -682,26 +705,21 @@ namespace Player {
 
 	private: System::Void updateTimer_Timeout(System::Object^  sender, System::EventArgs^  e)
 	{
-		if(isPlaying)
-			//TODO: getCurrentPosition dll method should be invoked here
-			// this value should be assigned to progressBar->Value
-			// currentPositionLabel and songDurationLabel must be updated
-			// private field m_songDuration stores duration of currently playing song
-
-			if (progressBar->Value < progressBar->Maximum - 1)
+		if (isPlaying and not pause)
+		{
+			m_currentPosition = m_playerDll->GetCurrentPosition() / 10000000;
+			int position = m_currentPosition * 1000 / m_songDuration;
+			updateProgressLabels();
+			if (position <= progressBar->Maximum)
 			{
-				progressBar->Value++;
-				unsigned short current_sec = progressBar->Value % 60;
-
-				currentPositionLabel->Text = System::Convert::ToString(progressBar->Value / 60) + ":" + ((current_sec < 10)? "0"+System::Convert::ToString(current_sec):System::Convert::ToString(current_sec));
-				songDurationLabel->Text =  System::Convert::ToString(progressBar->Maximum / 60) + ":" + System::Convert::ToString(progressBar->Maximum % 60);
+				progressBar->Value = position;
 			}
-			else
-				progressBar->Value = 0;
+		}
 	}
-	private:
-		static bool FileExists(const TCHAR *fileName);
-		int GetVolume();
+	private: System::Void volumeBar_Scroll(System::Object^  sender, System::EventArgs^  e)
+	{
+		updateVolume();
+	}
 };
 
 }

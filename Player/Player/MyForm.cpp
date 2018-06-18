@@ -90,12 +90,20 @@ bool Player::MyForm::FileExists(const TCHAR *fileName)
 	return true;
 }
 
-int Player::MyForm::GetVolume()
+void Player::MyForm::updateVolume()
 {
-	/*int vol = volumeBar.Value;
-	vol = 10000 - vol;
-	vol = -vol;
-	
-	return vol;*/
-	return 0;
+	int vol = volumeBar->Value;
+	if (m_currentVolume != vol)
+	{
+		m_currentVolume = vol;
+		vol = 7000 - (vol*7000)/50;
+		vol = -vol;
+		m_playerDll->SetVolume(vol);
+	}
+}
+
+void Player::MyForm::updateProgressLabels()
+{
+	currentPositionLabel->Text = System::String::Format(L"{0}:{1,2:D2}", m_currentPosition / 60, m_currentPosition % 60);
+	songDurationLabel->Text = System::String::Format(L"{0}:{1,2:D2}", m_songDuration / 60, m_songDuration % 60);
 }
