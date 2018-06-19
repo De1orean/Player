@@ -828,6 +828,9 @@ private: System::Void deleteItem_MouseEnter(System::Object^  sender, System::Eve
 	getBmpFromResource(deleteItem, IDB_DELETE_ITEM_ENTER);
 }
 	
+private: System::Void deleteItem_MouseEnter(System::Object^  sender, System::EventArgs^  e) {
+}
+		// getBmpFromResource(deleteItem, IDB_VOLUME_OFF);
 		 
 private: System::Void deleteItem_Click(System::Object^  sender, System::EventArgs^  e)
 {
