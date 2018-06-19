@@ -22,12 +22,20 @@
 #define IDB_PANEL_MIDDLE                118
 #define IDB_VOLUME                      119
 #define IDI_ICON                        120
+#define IDB_VOLUME_ENTER                121
+#define IDB_VOLUME_OFF                  123
+#define IDB_VOLUME_OFF_ENTER            125
+#define IDB_DELETE_ITEM                 126
+#define IDB_DELETE_ITEM_ENTER           127
+#define IDB_ADD_ITEM                    128
+#define IDB_BITMAP4                     129
+#define IDB_ADD_ITEM_ENTER              129
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        121
+#define _APS_NEXT_RESOURCE_VALUE        130
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           101
