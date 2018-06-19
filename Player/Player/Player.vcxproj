@@ -155,6 +155,8 @@
     <ResourceCompile Include="Player.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Resources\addItem.bmp" />
+    <Image Include="..\Resources\addItemEnter.bmp" />
     <Image Include="..\Resources\btn_nextsong.bmp" />
     <Image Include="..\Resources\btn_nextsong_enter.bmp" />
     <Image Include="..\Resources\btn_openfile.bmp" />
@@ -170,11 +172,16 @@
     <Image Include="..\Resources\btn_settings.bmp" />
     <Image Include="..\Resources\btn_settings_enter.bmp" />
     <Image Include="..\Resources\btn_settings_enter_big.bmp" />
+    <Image Include="..\Resources\deleteItem.bmp" />
+    <Image Include="..\Resources\deleteItemEnter.bmp" />
     <Image Include="..\Resources\icon.ico" />
     <Image Include="..\Resources\panel_bottom.bmp" />
     <Image Include="..\Resources\panel_left.bmp" />
     <Image Include="..\Resources\panel_middle.bmp" />
     <Image Include="..\Resources\volume.bmp" />
+    <Image Include="..\Resources\volume_enter.bmp" />
+    <Image Include="..\Resources\volume_off.bmp" />
+    <Image Include="..\Resources\volume_off_enter.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
