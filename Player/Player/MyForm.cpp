@@ -10,7 +10,7 @@ using namespace System::Runtime::InteropServices;
 //function main
 
 
-void main(array<String^>^ args)
+Void main(array<String^>^ args)
 {
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
@@ -19,7 +19,7 @@ void main(array<String^>^ args)
 	Application::Run(%form);
 }
 
-void Player::MyForm::getBmpFromResource(System::Windows::Forms::PictureBox^ picBox, unsigned long resourceID)
+Void Player::MyForm::setBmpFromResource(System::Windows::Forms::PictureBox^ picBox, unsigned long resourceID)
 {
 	if (picBox->Image != nullptr)
 		delete picBox->Image;
@@ -44,39 +44,81 @@ std::wstring Player::MyForm::s2ws(const std::string& s)
 	return r;
 }
 
-void Player::MyForm::LoadFromFile(String ^File, ListBox^ listBox1)
+Void Player::MyForm::LoadPlayList(String ^File)
 { //чтение из файла
-	String ^d, ^b;
+	String ^path, ^buffer;
 	listBox1->Items->Clear();
 	try {
-		b = System::IO::File::ReadAllText(File);
+		buffer = System::IO::File::ReadAllText(File);
 	}
 	catch (...) {
 		System::IO::File::WriteAllText("base.txt", "");
 		return;
 	}
-	while (b->Length>0) {
-		int i = b->IndexOf("\n");
+	while (buffer->Length>0) {
+		int i = buffer->IndexOf("\n");
 		if (i<0) continue;
-		d = b->Substring(0, i);
-		listBox1->Items->Add(d);
-		b = b->Substring(i + 1, b->Length - d->Length - 1);
+		path = buffer->Substring(0, i);
+		addSong(path);
+		buffer = buffer->Substring(i + 1, buffer->Length - path->Length - 1);
 	}
 	this->listBox1->SelectedIndex = -1;
 }
 
-void Player::MyForm::SaveToFile(String ^File, ListBox^  listBox1)
+Void Player::MyForm::SavePlayList(String ^File)
 { //запись в файл
 	String^ a;
 	String^ b;
-	int n = listBox1->Items->Count;
+	int n = m_songs->Count;
 	System::IO::File::Delete(File);
 	for (int i = 0; i<n; i++)
 	{
-		a = listBox1->Items[i]->ToString();
+		a = m_songs[i]->ToString();
 		b += a->Concat(a, "\n");
 	}
 	System::IO::File::AppendAllText(File, b);
+}
+
+Void Player::MyForm::addSong(String ^path)
+{
+	array<System::String^>^ splited = path->Split('\\');
+	System::String^ name = splited[splited->Length - 1];
+	m_songs->Add(path);
+	name = name->Substring(0,name->Length-4);
+	if (name->Length > 24)
+	{
+		name = name->Substring(0, 20) + "...";
+	}
+	listBox1->Items->Add(name);
+}
+
+bool Player::MyForm::playSong(Void)
+{
+	if (m_playingSongIndex != -1)
+	{
+		listBox1->SetSelected(m_playingSongIndex, true);
+
+		if (m_isPlaying)
+		{
+			if (m_playerDll->Load(StringtoLPCWSTR(m_songs[m_playingSongIndex]->ToString())) && m_playerDll->Play())
+			{
+				m_songDuration = m_playerDll->GetDuration() / 10000000;
+				updateVolume();
+				updateProgressLabels();
+				setBmpFromResource(playBut, IDB_BTN_PAUSE);
+				songName->Text = listBox1->Items[m_playingSongIndex]->ToString();
+				return true;
+			}
+			else
+			{
+				//some error occured duting load or playing songng cannot be played
+				if (listBox1->Items[m_playingSongIndex]->ToString()->IndexOf(L"Error - ") == -1)
+					listBox1->Items[m_playingSongIndex] = "Error - " + listBox1->Items[m_playingSongIndex];
+				m_isPlaying = false;
+			}
+		}
+	}
+	return false;
 }
 
 /* Return TRUE if file 'fileName' exists */
@@ -93,13 +135,9 @@ bool Player::MyForm::FileExists(const TCHAR *fileName)
 void Player::MyForm::updateVolume()
 {
 	int vol = volumeBar->Value;
-	if (m_currentVolume != vol)
-	{
-		m_currentVolume = vol;
-		vol = 7000 - (vol*7000)/50;
-		vol = -vol;
-		m_playerDll->SetVolume(vol);
-	}
+	vol = 7000 - (vol*7000)/50;
+	vol = -vol;
+	m_playerDll->SetVolume(vol);
 }
 
 void Player::MyForm::updateProgressLabels()

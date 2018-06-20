@@ -1,8 +1,9 @@
 
 #pragma once
-#include <string>
-#include <list>
+
 #include <iterator>
+//#include <string>
+//#include <utility>
 #include <vcclr.h>
 #include <Windows.h>
 #include "LibMP3DLL.h"
@@ -12,24 +13,12 @@
 #define and &&
 #define or ||
 
-//struct Name
-//{
-//	std::string shortName;
-//	std::string path;
-//};
-//
-//struct playList
-//{
-//	playList* prevSong;
-//	playList* nextSong;
-//	Name* songname;
-//};
-
 namespace Player {
 
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
+	using namespace System::Collections::Generic;
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
@@ -58,27 +47,21 @@ namespace Player {
 	private: System::Windows::Forms::Label^  currentPositionLabel;
 	private: System::Windows::Forms::PictureBox^  deleteItem;
 
-
-
-
-
-
-	public:
-		bool playCheck = false;
 	public:
 		MyForm(void) :
-			isPlaying(false),
-			pause(false),
+			m_playerDll(new CLibMP3DLL()),
+			m_songs(gcnew List<String^>()),
+			m_isPlaying(false),
+			m_isVolumeOn(true),
+			m_pause(false),
 			m_songDuration(0),
-			m_currentVolume(0),
 			m_currentPosition(0),
-			m_step(0)
+			m_playingSongIndex(-1)
 		{
 			InitializeComponent();
 			//
 			//TODO: добавьте код конструктора
 			//
-			m_playerDll = new CLibMP3DLL();
 			if (not m_playerDll->LoadDLL(L"LibMP3DLL.dll"))
 			{
 				MessageBox::Show("LibMP3DLL.dll is not loaded!\nClosing application...", "Error");
@@ -96,10 +79,10 @@ namespace Player {
 			{
 				delete components;
 			}
-
-			if (isPlaying)
+			m_songs->Clear();
+			if (m_isPlaying)
 			{
-				isPlaying = false;
+				m_isPlaying = false;
 				m_playerDll->Stop();
 			}
 
@@ -139,13 +122,13 @@ namespace Player {
 		/// </summary>
 
 		CLibMP3DLL* m_playerDll;
-		bool isPlaying = false;
-		bool isVolumeOn = true;
-		bool pause;
+		List<String^>^ m_songs;
+		bool m_isPlaying;
+		bool m_isVolumeOn;
+		bool m_pause;
 		unsigned int m_songDuration;
-		int m_currentVolume;
 		unsigned int m_currentPosition;
-		unsigned int m_step;
+		int m_playingSongIndex;
 
 	private:
 		static bool FileExists(const TCHAR *fileName);
@@ -355,7 +338,7 @@ namespace Player {
 			this->listBox1->Name = L"listBox1";
 			this->listBox1->Size = System::Drawing::Size(223, 240);
 			this->listBox1->TabIndex = 0;
-			this->listBox1->DoubleClick += gcnew System::EventHandler(this, &MyForm::listBox1_DoubleClick);
+			this->listBox1->MouseDoubleClick += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::listBox1_MouseDoubleClick);
 			// 
 			// openFileDialog1
 			// 
@@ -381,11 +364,11 @@ namespace Player {
 			this->songName->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->songName->AutoSize = true;
-			this->songName->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 27.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
+			this->songName->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->songName->Location = System::Drawing::Point(50, 96);
 			this->songName->Name = L"songName";
-			this->songName->Size = System::Drawing::Size(205, 42);
+			this->songName->Size = System::Drawing::Size(190, 39);
 			this->songName->TabIndex = 15;
 			this->songName->Text = L"SongName";
 			// 
@@ -533,7 +516,7 @@ namespace Player {
 		/**********************************************************************************************/
 	private: System::Void MyForm_Load(System::Object^  sender, System::EventArgs^  e)
 	{
-		LoadFromFile("base.txt", this->listBox1);
+		LoadPlayList("base.txt");
 	}
 			 /**********************************************************************************************/
 
@@ -542,66 +525,66 @@ namespace Player {
 			 /**********************************************************************************************/
 	private: System::Void pervSongBut_MouseEnter(System::Object^  sender, System::EventArgs^  e)
 	{
-		getBmpFromResource(prevSongBut, IDB_BTN_PREV_SONG_ENTER);
+		setBmpFromResource(prevSongBut, IDB_BTN_PREV_SONG_ENTER);
 	}
 
 	private: System::Void pervSongBut_MouseLeave(System::Object^  sender, System::EventArgs^  e)
 	{
-		getBmpFromResource(prevSongBut, IDB_BTN_PREV_SONG);
+		setBmpFromResource(prevSongBut, IDB_BTN_PREV_SONG);
 	}
 	private: System::Void nextSongBut_MouseEnter(System::Object^  sender, System::EventArgs^  e)
 	{
-		getBmpFromResource(nextSongBut, IDB_BTN_NEXT_SONG_ENTER);
+		setBmpFromResource(nextSongBut, IDB_BTN_NEXT_SONG_ENTER);
 	}
 
 	private: System::Void nextSongBut_MouseLeave(System::Object^  sender, System::EventArgs^  e)
 	{
-		getBmpFromResource(nextSongBut, IDB_BTN_NEXT_SONG);
+		setBmpFromResource(nextSongBut, IDB_BTN_NEXT_SONG);
 	}
 
 	private: System::Void panelBut_MouseEnter(System::Object^  sender, System::EventArgs^  e)
 	{
-		getBmpFromResource(panelBut, IDB_BTN_PANEL_ENTER);
+		setBmpFromResource(panelBut, IDB_BTN_PANEL_ENTER);
 	}
 	private: System::Void panelBut_MouseLeave(System::Object^  sender, System::EventArgs^  e)
 	{
-		getBmpFromResource(panelBut, IDB_BTN_PANEL);
+		setBmpFromResource(panelBut, IDB_BTN_PANEL);
 	}
 
 	private: System::Void settingsBut_MouseEnter(System::Object^  sender, System::EventArgs^  e)
 	{
 		if (settingsBut->Width < 150)
 		{
-			getBmpFromResource(settingsBut, IDB_BTN_SETTINGS_ENTER_BIG);
+			setBmpFromResource(settingsBut, IDB_BTN_SETTINGS_ENTER_BIG);
 
 		}
 		else
 		{
-			getBmpFromResource(settingsBut, IDB_BTN_SETTINGS_ENTER_BIG);
+			setBmpFromResource(settingsBut, IDB_BTN_SETTINGS_ENTER_BIG);
 			SettingsLagel->BackColor = System::Drawing::Color::FromArgb(255, 206, 206, 206);
 		}
 	}
 	private: System::Void settingsBut_MouseLeave(System::Object^  sender, System::EventArgs^  e)
 	{
-		getBmpFromResource(settingsBut, IDB_BTN_SETTINGS);
+		setBmpFromResource(settingsBut, IDB_BTN_SETTINGS);
 		SettingsLagel->BackColor = System::Drawing::Color::FromArgb(255, 225, 226, 225);
 	}
 	private: System::Void pictureBox1_MouseEnter(System::Object^  sender, System::EventArgs^  e)
 	{
-		getBmpFromResource(pictureBox1, IDB_ADD_ITEM_ENTER);
+		setBmpFromResource(pictureBox1, IDB_ADD_ITEM_ENTER);
 	}
 	private: System::Void pictureBox1_MouseLeave(System::Object^  sender, System::EventArgs^  e)
 	{
-		getBmpFromResource(pictureBox1, IDB_ADD_ITEM);
+		setBmpFromResource(pictureBox1, IDB_ADD_ITEM);
 	}
 	private: System::Void SettingsLagel_MouseEnter(System::Object^  sender, System::EventArgs^  e)
 	{
-		getBmpFromResource(settingsBut, IDB_BTN_SETTINGS_ENTER_BIG);
+		setBmpFromResource(settingsBut, IDB_BTN_SETTINGS_ENTER_BIG);
 		SettingsLagel->BackColor = System::Drawing::Color::FromArgb(255, 206, 206, 206);
 	}
 	private: System::Void SettingsLagel_MouseLeave(System::Object^  sender, System::EventArgs^  e)
 	{
-		getBmpFromResource(settingsBut, IDB_BTN_SETTINGS);
+		setBmpFromResource(settingsBut, IDB_BTN_SETTINGS);
 		SettingsLagel->BackColor = System::Drawing::Color::FromArgb(255, 225, 226, 225);
 	}
 
@@ -612,30 +595,34 @@ namespace Player {
 			 /**********************************************************************************************/
 	private: System::Void playBut_Click(System::Object^  sender, System::EventArgs^  e)
 	{
-		if (isPlaying)
+		if (m_isPlaying)
 		{
-			if (not pause)
+			if (not m_pause)
 			{
-				pause = true;
-				getBmpFromResource(playBut, IDB_BTN_PLAY_ENTER);
+				m_pause = true;
+				setBmpFromResource(playBut, IDB_BTN_PLAY_ENTER);
 				m_playerDll->Pause();
 			}
 			else
 			{
-				pause = false;
+				m_pause = false;
 				m_playerDll->Play();
-				getBmpFromResource(playBut, IDB_BTN_PAUSE_ENTER);
+				setBmpFromResource(playBut, IDB_BTN_PAUSE_ENTER);
 			}
 		}
 		else
 		{
-			if (m_playerDll->Load(StringtoLPCWSTR(listBox1->Items[listBox1->SelectedIndex]->ToString())) && m_playerDll->Play())
+			if (m_songs->Count)
 			{
-				updateVolume();
-				isPlaying = true;
-				getBmpFromResource(playBut, IDB_BTN_PAUSE_ENTER);
-				m_songDuration = m_playerDll->GetDuration() / 10000000;
-				updateProgressLabels();
+				m_isPlaying = true;
+				if (m_playingSongIndex == -1)
+				{
+					m_playingSongIndex = 0;
+				}
+				if (playSong())
+				{
+					setBmpFromResource(playBut, IDB_BTN_PAUSE_ENTER);
+				}
 			}
 		}
 	}
@@ -646,24 +633,24 @@ namespace Player {
 			 /**********************************************************************************************/
 	private: System::Void playBut_MouseEnter(System::Object^  sender, System::EventArgs^  e)
 	{
-		if (isPlaying and not pause)
+		if (m_isPlaying and not m_pause)
 		{
-			getBmpFromResource(playBut, IDB_BTN_PAUSE_ENTER);
+			setBmpFromResource(playBut, IDB_BTN_PAUSE_ENTER);
 		}
 		else
 		{
-			getBmpFromResource(playBut, IDB_BTN_PLAY_ENTER);
+			setBmpFromResource(playBut, IDB_BTN_PLAY_ENTER);
 		}
 	}
 	private: System::Void playBut_MouseLeave(System::Object^  sender, System::EventArgs^  e)
 	{
-		if (isPlaying and not pause)
+		if (m_isPlaying and not m_pause)
 		{
-			getBmpFromResource(playBut, IDB_BTN_PAUSE);
+			setBmpFromResource(playBut, IDB_BTN_PAUSE);
 		}
 		else
 		{
-			getBmpFromResource(playBut, IDB_BTN_PLAY);
+			setBmpFromResource(playBut, IDB_BTN_PLAY);
 		}
 	}
 			 /**********************************************************************************************/
@@ -674,22 +661,17 @@ namespace Player {
 	private: System::Void panelBut_Click(System::Object^  sender, System::EventArgs^  e)
 	{
 		if (leftPanel->Width != 184)
-		{
 			for (int i = 44; i < 184; i++)
 			{
 				leftPanel->Width += 1;
 				settingsBut->Width += 1;
 			}
-
-		}
 		else
-		{
 			for (int i = 44; i < 184; i++)
 			{
 				leftPanel->Width -= 1;
 				settingsBut->Width -= 1;
 			}
-		}
 	}
 
 	private: System::Void settingsBut_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -705,11 +687,11 @@ namespace Player {
 
 	private: System::Void openFileDialog1_FileOk(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e)
 	{
-		listBox1->Items->Add(openFileDialog1->FileName);
-		songName->Text = openFileDialog1->FileName;
+		System::String^ path = openFileDialog1->FileName;
+		addSong(path);
 	}
 
-	private: void getBmpFromResource(System::Windows::Forms::PictureBox^ picBox, unsigned long resourceID);
+	private: Void setBmpFromResource(System::Windows::Forms::PictureBox^ picBox, unsigned long resourceID);
 
 	private: std::wstring s2ws(const std::string& s);
 
@@ -718,18 +700,22 @@ namespace Player {
 		pin_ptr<const wchar_t> wname = PtrToStringChars(s);
 		return wname;
 	};
-	private: void LoadFromFile(String^ File, ListBox^ listBox1);
+	private: Void LoadPlayList(String^ File);
 
-	private: void SaveToFile(String ^File, ListBox^  listBox1);
+	private: Void SavePlayList(String ^File);
 
-	private: System::Void MyForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e)
+	private: Void addSong(System::String^ path);
+
+	private: bool playSong(Void);
+
+	private: System::Void MyForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^  e)
 	{
-		SaveToFile("base.txt", this->listBox1);
+		SavePlayList("base.txt");
 	}
 
-	private: System::Void updateTimer_Timeout(System::Object^  sender, System::EventArgs^  e)
+	private: System::Void updateTimer_Timeout(System::Object^ sender, System::EventArgs^  e)
 	{
-		if (isPlaying and not pause)
+		if (m_isPlaying and not m_pause and m_songDuration)
 		{
 			m_currentPosition = m_playerDll->GetCurrentPosition() / 10000000;
 			int position = m_currentPosition * 1000 / m_songDuration;
@@ -738,6 +724,8 @@ namespace Player {
 			{
 				progressBar->Value = position;
 			}
+			if (m_songDuration == m_currentPosition)
+				nextSongBut_Click(nullptr, nullptr);
 		}
 	}
 	private: System::Void volumeBar_Scroll(System::Object^  sender, System::EventArgs^  e)
@@ -746,7 +734,7 @@ namespace Player {
 	}
 	private: System::Void progressBar_Scroll(System::Object^  sender, System::EventArgs^  e)
 	{
-		if (isPlaying and pause == false)
+		if (m_isPlaying and m_pause == false)
 		{
 			__int64 duration = m_playerDll->GetDuration();
 			__int64 pos = progressBar->Value * duration / progressBar->Maximum;
@@ -758,7 +746,7 @@ namespace Player {
 			__int64 pos = progressBar->Value * duration / progressBar->Maximum;
 			__int64 posStop = pos;
 
-			if (pause == true)
+			if (m_pause == true)
 			{
 				m_playerDll->SetPositions(&pos, &duration, true);
 				m_playerDll->Pause();
@@ -777,17 +765,17 @@ namespace Player {
 
 	private: System::Void btnVolume_Click(System::Object^  sender, System::EventArgs^  e)
 	{
-		if (isVolumeOn)
+		if (m_isVolumeOn)
 		{
-			getBmpFromResource(btnVolume, IDB_VOLUME_OFF_ENTER);
+			setBmpFromResource(btnVolume, IDB_VOLUME_OFF_ENTER);
 			volumeBar->Value = volumeBar->Minimum;
-			isVolumeOn = false;
+			m_isVolumeOn = false;
 		}
 		else
 		{
-			getBmpFromResource(btnVolume, IDB_VOLUME_ENTER);
+			setBmpFromResource(btnVolume, IDB_VOLUME_ENTER);
 			volumeBar->Value = volumeBar->Maximum;
-			isVolumeOn = true;
+			m_isVolumeOn = true;
 		}
 	}
 	private: System::Void volumeBar_ValueChanged(System::Object^  sender, System::EventArgs^  e) 
@@ -796,74 +784,102 @@ namespace Player {
 	}
 private: System::Void btnVolume_MouseEnter(System::Object^  sender, System::EventArgs^  e) 
 {
-	if (isVolumeOn)
+	if (m_isVolumeOn)
 	{
 		if (volumeBar->Value == volumeBar->Minimum)
-			getBmpFromResource(btnVolume, IDB_VOLUME_OFF_ENTER);
+			setBmpFromResource(btnVolume, IDB_VOLUME_OFF_ENTER);
 		else
-			getBmpFromResource(btnVolume, IDB_VOLUME_ENTER);
+			setBmpFromResource(btnVolume, IDB_VOLUME_ENTER);
 	}
 	else
 	{
-		getBmpFromResource(btnVolume, IDB_VOLUME_OFF_ENTER);
+		setBmpFromResource(btnVolume, IDB_VOLUME_OFF_ENTER);
 	}
 }
 private: System::Void btnVolume_MouseLeave(System::Object^  sender, System::EventArgs^  e) 
 {
-	if (isVolumeOn)
+	if (m_isVolumeOn)
 	{
 		if (volumeBar->Value == volumeBar->Minimum)
-			getBmpFromResource(btnVolume, IDB_VOLUME_OFF);
+			setBmpFromResource(btnVolume, IDB_VOLUME_OFF);
 		else
-			getBmpFromResource(btnVolume, IDB_VOLUME);
+			setBmpFromResource(btnVolume, IDB_VOLUME);
 	}
 	else
 	{
-		getBmpFromResource(btnVolume, IDB_VOLUME_OFF);
+		setBmpFromResource(btnVolume, IDB_VOLUME_OFF);
 	}
 }
 
 private: System::Void deleteItem_MouseEnter(System::Object^  sender, System::EventArgs^  e) 
 {
-	getBmpFromResource(deleteItem, IDB_DELETE_ITEM_ENTER);
+	setBmpFromResource(deleteItem, IDB_DELETE_ITEM_ENTER);
 }
-	
-private: System::Void deleteItem_MouseEnter(System::Object^  sender, System::EventArgs^  e) {
-}
-		// getBmpFromResource(deleteItem, IDB_VOLUME_OFF);
 		 
 private: System::Void deleteItem_Click(System::Object^  sender, System::EventArgs^  e)
 {
-	listBox1->Items->RemoveAt(listBox1->SelectedIndex);
+	if (m_songs->Count)
+	{
+		if (listBox1->SelectedIndex != -1)
+		{
+			m_songs->RemoveAt(listBox1->SelectedIndex);
+			listBox1->Items->RemoveAt(listBox1->SelectedIndex);
+		}
+	}
 }
 private: System::Void deleteItem_MouseLeave(System::Object^  sender, System::EventArgs^  e) 
 {
-	getBmpFromResource(deleteItem, IDB_DELETE_ITEM);
+	setBmpFromResource(deleteItem, IDB_DELETE_ITEM);
 }
-private: System::Void listBox1_DoubleClick(System::Object^  sender, System::EventArgs^  e) 
+private: System::Void listBox1_MouseDoubleClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
 {
-	m_playerDll->Load(StringtoLPCWSTR(listBox1->Items[listBox1->SelectedIndex]->ToString()));
-	m_playerDll->Play();
+	if (m_songs->Count)
+	{
+		if (listBox1->SelectedIndex != -1)
+		{
+			m_playingSongIndex = listBox1->SelectedIndex;
+			m_isPlaying = true;
+			playSong();
+		}
+	}
 }
 private: System::Void nextSongBut_Click(System::Object^  sender, System::EventArgs^  e) 
 {
-	listBox1->SetSelected(((listBox1->SelectedIndex) + 1),true);
-	m_playerDll->Load(StringtoLPCWSTR(listBox1->Items[listBox1->SelectedIndex]->ToString()));
-	updateVolume();
-	m_songDuration = m_playerDll->GetDuration() / 10000000;
-	updateProgressLabels();
-	if (isPlaying)
-		m_playerDll->Play();
+	if (m_songs->Count)
+	{
+		if (m_playingSongIndex == -1)
+		{
+			m_playingSongIndex = 0;
+		}
+		else
+		{
+			++m_playingSongIndex;
+			if (m_playingSongIndex >= m_songs->Count)
+			{
+				m_playingSongIndex = 0;
+			}
+		}
+		playSong();
+	}
 }
 private: System::Void prevSongBut_Click(System::Object^  sender, System::EventArgs^  e) 
 {
-	listBox1->SetSelected(((listBox1->SelectedIndex) - 1), true);
-	m_playerDll->Load(StringtoLPCWSTR(listBox1->Items[listBox1->SelectedIndex]->ToString()));
-	updateVolume();
-	m_songDuration = m_playerDll->GetDuration() / 10000000;
-	updateProgressLabels();
-	if (isPlaying)
-		m_playerDll->Play();
+	if (m_songs->Count)
+	{
+		if (m_playingSongIndex == -1)
+		{
+			m_playingSongIndex = 0;
+		}
+		else
+		{
+			--m_playingSongIndex;
+			if (m_playingSongIndex == -1)
+			{
+				m_playingSongIndex = m_songs->Count-1;
+			}
+		}
+		playSong();
+	}
 }
 };
 
