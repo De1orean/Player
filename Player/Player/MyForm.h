@@ -12,6 +12,7 @@
 #define not !
 #define and &&
 #define or ||
+#define LONG long long
 
 namespace Player {
 
@@ -126,9 +127,9 @@ namespace Player {
 		bool m_isPlaying;
 		bool m_isVolumeOn;
 		bool m_pause;
-		unsigned int m_songDuration;
-		unsigned int m_currentPosition;
-		int m_playingSongIndex;
+		int  m_songDuration;
+		int  m_currentPosition;
+		int  m_playingSongIndex;
 
 	private:
 		static bool FileExists(const TCHAR *fileName);
@@ -382,10 +383,11 @@ namespace Player {
 			this->progressBar->Location = System::Drawing::Point(12, 294);
 			this->progressBar->Maximum = 1000;
 			this->progressBar->Name = L"progressBar";
-			this->progressBar->Size = System::Drawing::Size(668, 45);
+			this->progressBar->Size = System::Drawing::Size(670, 45);
 			this->progressBar->TabIndex = 16;
 			this->progressBar->TickStyle = System::Windows::Forms::TickStyle::None;
 			this->progressBar->Scroll += gcnew System::EventHandler(this, &MyForm::progressBar_Scroll);
+			this->progressBar->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::progressBar_MouseUp);
 			// 
 			// volumeBar
 			// 
@@ -717,7 +719,7 @@ namespace Player {
 	{
 		if (m_isPlaying and not m_pause and m_songDuration)
 		{
-			m_currentPosition = m_playerDll->GetCurrentPosition() / 10000000;
+			m_currentPosition = static_cast<int>(m_playerDll->GetCurrentPosition() / 10000000);
 			int position = m_currentPosition * 1000 / m_songDuration;
 			updateProgressLabels();
 			if (position <= progressBar->Maximum)
@@ -725,7 +727,21 @@ namespace Player {
 				progressBar->Value = position;
 			}
 			if (m_songDuration == m_currentPosition)
-				nextSongBut_Click(nullptr, nullptr);
+			{
+				if (m_songs->Count - 1 != m_playingSongIndex)
+				{
+					nextSongBut_Click(nullptr, nullptr);
+				}
+				else
+				{
+					m_isPlaying = false;
+					m_pause = false;
+					m_currentPosition = 0;
+					progressBar->Value = 0;
+					updateProgressLabels();
+					setBmpFromResource(playBut, IDB_BTN_PLAY);
+				}
+			}
 		}
 	}
 	private: System::Void volumeBar_Scroll(System::Object^  sender, System::EventArgs^  e)
@@ -734,33 +750,12 @@ namespace Player {
 	}
 	private: System::Void progressBar_Scroll(System::Object^  sender, System::EventArgs^  e)
 	{
-		if (m_isPlaying and m_pause == false)
+		if (m_isPlaying)
 		{
-			__int64 duration = m_playerDll->GetDuration();
-			__int64 pos = progressBar->Value * duration / progressBar->Maximum;
+			long long duration = m_playerDll->GetDuration();
+			long long pos = progressBar->Value * duration / progressBar->Maximum;
 			m_playerDll->SetPositions(&pos, &duration, true);
 		}
-		else
-		{
-			__int64 duration = m_playerDll->GetDuration();
-			__int64 pos = progressBar->Value * duration / progressBar->Maximum;
-			__int64 posStop = pos;
-
-			if (m_pause == true)
-			{
-				m_playerDll->SetPositions(&pos, &duration, true);
-				m_playerDll->Pause();
-			}
-			else
-			{
-				m_playerDll->SetPositions(&pos, &posStop, true);
-			}
-		}
-
-		__int64 durationTemp = m_playerDll->GetDuration() / 10000000;
-		__int64 curPos = m_playerDll->GetCurrentPosition();
-
-		__int64 timeElapsedSec = curPos / 10000000;
 	}
 
 	private: System::Void btnVolume_Click(System::Object^  sender, System::EventArgs^  e)
@@ -879,6 +874,19 @@ private: System::Void prevSongBut_Click(System::Object^  sender, System::EventAr
 			}
 		}
 		playSong();
+	}
+}
+private: System::Void progressBar_MouseUp(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+	if (m_isPlaying or m_pause)
+	{
+		int posToSet = (e->X - 9)*m_songDuration / (progressBar->Size.Width - 18);
+		if (posToSet >= 0 and posToSet <= m_songDuration)
+		{
+			progressBar->Value = posToSet * 1000 / m_songDuration;
+			long long duration = m_playerDll->GetDuration();
+			long long pos = posToSet * duration / m_songDuration;
+			m_playerDll->SetPositions(&pos, &duration, true);
+		}
 	}
 }
 };

@@ -28,8 +28,6 @@ Void Player::MyForm::setBmpFromResource(System::Windows::Forms::PictureBox^ picB
 	HANDLE hbi = LoadImage((HINSTANCE)hInst.ToPointer(), MAKEINTRESOURCE(resourceID), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR);
 	picBox->Image = Bitmap::FromHbitmap(IntPtr(hbi));
 	DeleteObject(hbi);
-	delete hInst;
-	delete mod;
 }
 
 std::wstring Player::MyForm::s2ws(const std::string& s)
@@ -102,7 +100,7 @@ bool Player::MyForm::playSong(Void)
 		{
 			if (m_playerDll->Load(StringtoLPCWSTR(m_songs[m_playingSongIndex]->ToString())) && m_playerDll->Play())
 			{
-				m_songDuration = m_playerDll->GetDuration() / 10000000;
+				m_songDuration = static_cast<int>(m_playerDll->GetDuration() / 10000000);
 				updateVolume();
 				updateProgressLabels();
 				setBmpFromResource(playBut, IDB_BTN_PAUSE);
